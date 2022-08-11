@@ -1,6 +1,6 @@
 #pragma once
 
-#include "defines.hpp"
+#include "config.hpp"
 #include <gmpxx.h>
 
 using Integer=mpz_class;

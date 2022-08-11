@@ -1,6 +1,6 @@
 #include "SuffixClass.hpp"
 
-#include "defines.hpp"
+#include "config.hpp"
 
 #include "SuffixMath.hpp"
 #include <stdexcept>

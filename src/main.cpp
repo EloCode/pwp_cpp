@@ -1,4 +1,4 @@
-#include "defines.hpp"
+#include "config.hpp"
 
 #include <iostream>
 #include <gmpxx.h>
@@ -23,9 +23,10 @@
 
 using namespace std;
 void printWelcome() {
-    cout << " --- Powers Without Powers --- " << endl
-         << "Using gmp: " << gmp_version << endl
-         << "OMP threads: " << omp_get_max_threads() << endl << endl;
+    cout << " --- Powers Without Powers --- \n"
+         << "Version: " << PWP_VERSION_MAJOR << "." << PWP_VERSION_MINOR << "\n"
+         << "Using gmp: " << gmp_version << "\n"
+         << "OMP threads: " << omp_get_max_threads() << "\n" << endl;
 }
 
 void printHelp() {
