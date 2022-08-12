@@ -8,7 +8,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 find_library(libgmp gmp REQUIRED)
 find_library(libgmpxx gmpxx REQUIRED)
-find_package(OpenMP REQUIRED)
+find_package(OpenMP)
 
 
 include_directories(${PROJECT_SOURCE_DIR})

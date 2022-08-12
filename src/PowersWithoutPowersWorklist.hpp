@@ -39,12 +39,14 @@ class PowersWithoutPowersWorklist
          */
         vector<unsigned long> runDFS(unsigned max_level);
 
+        #ifdef _OPENMP
         /** Find all matches until tree level max_level
          * maximal exponent checked = (max_level - 1) + 4*5^(max_level - 1)
          * uses OMP_NUM_THREADS parallel threads
          * \param max_level 0 <= max_level <= 27, this implementation does not support exploration beyond level 27
          */
         vector<unsigned long> runParallel(unsigned max_level);
+        #endif //_OPENMP
 
         /**
          * \return true if unexpanded and matches are empty => last termination happened due to empty worklist => series is finite and complete
@@ -52,8 +54,10 @@ class PowersWithoutPowersWorklist
         bool isComplete();
 
         static void timeTableRun(unsigned long maxK=14);
+        #ifdef _OPENMP
         static void timeTableRunParallel(unsigned long maxK=14);
         static void speedUpTable(unsigned long minK = 13, unsigned long maxK=16);
+        #endif //_OPENMP
 
         #ifdef STATS
         array<unsigned, K_MAX_FOR_ULONG> max_k{};

@@ -69,48 +69,50 @@ namespace PowersWithoutPowersWorklist_Test {
         cout << ((test? "success" : "failed")) << endl;
 
         pwp.run(10);
-for (int n :{1,2,4,8,12,48}) {
-    omp_set_num_threads(n);
-        cout << "OMP_NUM_THREADS=" << n << endl << "runParallel:";
+        #ifdef _OPENMP
+        for (int n :{1,2,4,8,12,48}) {
+            omp_set_num_threads(n);
+                cout << "OMP_NUM_THREADS=" << n << endl << "runParallel:";
 
-        PowersWithoutPowersWorklist pwp2;
-        m = pwp2.runParallel(10);
-        test = true;
-        success &= test;
-        cout << ((test? "success" : "failed")) << endl;
+                PowersWithoutPowersWorklist pwp2;
+                m = pwp2.runParallel(10);
+                test = true;
+                success &= test;
+                cout << ((test? "success" : "failed")) << endl;
 
-        cout << "run == runParallel (matches): ";
-        test = (m == vector<unsigned long>({16}));
-        success &= test;
-        cout << ((test? "success" : "failed")) << endl;
+                cout << "run == runParallel (matches): ";
+                test = (m == vector<unsigned long>({16}));
+                success &= test;
+                cout << ((test? "success" : "failed")) << endl;
 
-        cout << "run == runParallel (worklist): ";
-        test = (pwp.worklist[10].size() == pwp2.worklist[10].size());
-        test &= (pwp.worklist[11].size() == pwp2.worklist[11].size());
-        test &= (pwp.worklist[12].size() == pwp2.worklist[12].size());
-        test &= (pwp.worklist[13].size() == pwp2.worklist[13].size());
-        test &= (pwp.worklist[14].size() == pwp2.worklist[14].size());
-        test &= (pwp.worklist[15].size() == pwp2.worklist[15].size());
-        test &= (pwp.worklist[16].size() == pwp2.worklist[16].size());
-        test &= (pwp.worklist[17].size() == pwp2.worklist[17].size());
-        test &= (pwp.worklist[18].size() == pwp2.worklist[18].size());
-        test &= (pwp.worklist[19].size() == pwp2.worklist[19].size());
-        test &= (pwp.worklist[20].size() == pwp2.worklist[20].size());
-        test &= (pwp.worklist[21].size() == pwp2.worklist[21].size());
-        test &= (pwp.worklist[22].size() == pwp2.worklist[22].size());
-        test &= (pwp.worklist[23].size() == pwp2.worklist[23].size());
-        test &= (pwp.worklist[24].size() == pwp2.worklist[24].size());
-        test &= (pwp.worklist[25].size() == pwp2.worklist[25].size());
-        test &= (pwp.worklist[26].size() == pwp2.worklist[26].size());
-        success &= test;
-        cout << ((test? "success" : "failed")) << endl;
+                cout << "run == runParallel (worklist): ";
+                test = (pwp.worklist[10].size() == pwp2.worklist[10].size());
+                test &= (pwp.worklist[11].size() == pwp2.worklist[11].size());
+                test &= (pwp.worklist[12].size() == pwp2.worklist[12].size());
+                test &= (pwp.worklist[13].size() == pwp2.worklist[13].size());
+                test &= (pwp.worklist[14].size() == pwp2.worklist[14].size());
+                test &= (pwp.worklist[15].size() == pwp2.worklist[15].size());
+                test &= (pwp.worklist[16].size() == pwp2.worklist[16].size());
+                test &= (pwp.worklist[17].size() == pwp2.worklist[17].size());
+                test &= (pwp.worklist[18].size() == pwp2.worklist[18].size());
+                test &= (pwp.worklist[19].size() == pwp2.worklist[19].size());
+                test &= (pwp.worklist[20].size() == pwp2.worklist[20].size());
+                test &= (pwp.worklist[21].size() == pwp2.worklist[21].size());
+                test &= (pwp.worklist[22].size() == pwp2.worklist[22].size());
+                test &= (pwp.worklist[23].size() == pwp2.worklist[23].size());
+                test &= (pwp.worklist[24].size() == pwp2.worklist[24].size());
+                test &= (pwp.worklist[25].size() == pwp2.worklist[25].size());
+                test &= (pwp.worklist[26].size() == pwp2.worklist[26].size());
+                success &= test;
+                cout << ((test? "success" : "failed")) << endl;
 
-        cout << "run == runParallel (unexpanded): ";
-        test = (pwp.unexpanded.size() == pwp2.unexpanded.size());
-        success &= test;
-        cout << ((test? "success" : "failed")) << endl;
-}
-
+                cout << "run == runParallel (unexpanded): ";
+                test = (pwp.unexpanded.size() == pwp2.unexpanded.size());
+                success &= test;
+                cout << ((test? "success" : "failed")) << endl;
+        }
+        #endif //_OPENMP
+        
         cout << " --- Overall " << (success? "success --- " : "failed --- ") << endl << endl;
         return success;
     }

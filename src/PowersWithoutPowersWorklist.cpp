@@ -126,6 +126,7 @@ vector<unsigned long> PowersWithoutPowersWorklist::runDFS(unsigned max_level) {
     return matches;
 }
 
+#ifdef _OPENMP
 vector<unsigned long> PowersWithoutPowersWorklist::runParallel(unsigned max_level) {
     int N = omp_get_max_threads();
     while(level <= max_level and getWL(level).size() < N * 10)
@@ -175,6 +176,7 @@ vector<unsigned long> PowersWithoutPowersWorklist::runParallel(unsigned max_leve
     level = max_level + 1;
     return matches;
 }
+#endif //_OPENMP
 
 bool PowersWithoutPowersWorklist::isComplete() {
     if(not  unexpanded.empty())
@@ -227,6 +229,8 @@ void PowersWithoutPowersWorklist::timeTableRun(unsigned long maxK) {
     }
     cout << endl;
 }
+
+#ifdef _OPENMP
 void PowersWithoutPowersWorklist::timeTableRunParallel(unsigned long maxK) {
     using namespace std;
     time_t t_start, t_end;
@@ -252,6 +256,7 @@ void PowersWithoutPowersWorklist::timeTableRunParallel(unsigned long maxK) {
     }
     cout << endl;
 }
+
 void PowersWithoutPowersWorklist::speedUpTable(unsigned long minK,  unsigned long maxK) {
     using namespace std;
     chrono::time_point<chrono::steady_clock> t_start, t_end;
@@ -312,6 +317,8 @@ void PowersWithoutPowersWorklist::speedUpTable(unsigned long minK,  unsigned lon
     }
     cout << endl;
 }
+#endif //_OPENMP
+
 #define STATS
 #ifdef STATS
 void PowersWithoutPowersWorklist::printStatistics(unsigned long max_level) {
