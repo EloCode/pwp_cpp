@@ -13,7 +13,7 @@ find_package(OpenMP)
 
 include_directories(${PROJECT_SOURCE_DIR})
 add_executable(pwp main.cpp config.hpp PowersWithoutPowersFinder_Test.hpp PowersWithoutPowersWorklist_Test.hpp SuffixClass.cpp SuffixMath.cpp SuffixSet.cpp
-defines.hpp PowersWithoutPowersFinder.cpp PowersWithoutPowersWorklist.cpp Stats.cpp SuffixClass.hpp SuffixMath.hpp SuffixSet.hpp
+PowersWithoutPowersFinder.cpp PowersWithoutPowersWorklist.cpp Stats.cpp SuffixClass.hpp SuffixMath.hpp SuffixSet.hpp
 ExtraOperators.hpp PowersWithoutPowersFinder.hpp PowersWithoutPowersWorklist.hpp Stats.hpp SuffixClass_Test.hpp SuffixMath_Test.hpp SuffixSet_Test.hpp
 )
 configure_file(config.hpp.in config.hpp)
