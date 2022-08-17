@@ -25,7 +25,7 @@ const std::array<const Integer,NUM_HARDCODED> Len_I = {
     568434188608080148696899414062500_mpz, 2842170943040400743484497070312500_mpz, 14210854715202003717422485351562500_mpz, 71054273576010018587112426757812500_mpz
 
 };
-const Integer SuffixMath::cycleLen_I   (unsigned long k) {
+auto SuffixMath::cycleLen_I   (unsigned long k) -> const Integer {
     if(k <= NUM_HARDCODED) {
         return Len_I[k-1];
     } else {
@@ -33,7 +33,7 @@ const Integer SuffixMath::cycleLen_I   (unsigned long k) {
     }
 }
 
-unsigned long SuffixMath::maxCompletedCycleK (unsigned long n) {
+auto SuffixMath::maxCompletedCycleK (unsigned long n) -> unsigned long {
     unsigned long k = 0;
     while(true) {
         if (not cycleLastOverflow(k+1)
@@ -45,14 +45,14 @@ unsigned long SuffixMath::maxCompletedCycleK (unsigned long n) {
     }
     return k;
 }
-unsigned long SuffixMath::maxCompletedCycleN (unsigned long n) {
+auto SuffixMath::maxCompletedCycleN (unsigned long n) -> unsigned long {
     return SuffixMath::cycleLast(maxCompletedCycleK(n));
 }
-unsigned long SuffixMath::nextCompletedCycleN (unsigned long n) {
+auto SuffixMath::nextCompletedCycleN (unsigned long n) -> unsigned long {
     return SuffixMath::cycleLast(maxCompletedCycleK(n) + 1);
 }
 
-const Integer SuffixMath::powContainsPows(const Integer& b, const Integer& n) {
+auto SuffixMath::powContainsPows(const Integer& b, const Integer& n) -> const Integer {
     std::vector<int> powers;
     for (int p = 1; p < 10; p *= (int) b.get_si()) {
         powers.push_back(p);
@@ -60,13 +60,13 @@ const Integer SuffixMath::powContainsPows(const Integer& b, const Integer& n) {
     return powContains(powers, b, n);
 }
 
-const Integer SuffixMath::powContains(const vector<int>& digits, const Integer& b, const Integer& n) {
+auto SuffixMath::powContains(const vector<int>& digits, const Integer& b, const Integer& n) -> const Integer {
     array<bool, 10> forbidden = {false, false, false, false, false, false, false, false, false, false};
     for (int i: digits) forbidden[i] = true;
     return powContains(forbidden, b, n);
 }
 
-const Integer SuffixMath::powContains(const array<bool, 10>& forbidden, const Integer& b, const Integer& n) {
+auto SuffixMath::powContains(const array<bool, 10>& forbidden, const Integer& b, const Integer& n) -> const Integer {
     //cout << "powContains(forbidden = [";
     //for (auto i: forbidden)
         //cout << i << " ";

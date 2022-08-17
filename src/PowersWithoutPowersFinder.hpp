@@ -9,25 +9,23 @@
 class PowersWithoutPowersFinder
 {
     public:
-        /** Default constructor */
-        PowersWithoutPowersFinder();
         /** Default destructor */
-        virtual ~PowersWithoutPowersFinder();
+        virtual ~PowersWithoutPowersFinder() = default;
 
         /**
          * \return Returns a vector of all matches that could be found so far
          */
-        std::vector<unsigned long> Getmatches() { return matches; };
+        auto Getmatches() -> std::vector<unsigned long> { return matches; };
 
         /**
          * \return Returns a vector of all forbidden suffix classes that could be found so far
          */
-        std::vector<SuffixClass> GetforbiddenClasses();
+        auto GetforbiddenClasses() -> std::vector<SuffixClass>;
 
         /**
          * \return Returns the biggest exponent that has been tested so far
          */
-        unsigned long GetmaxTestedN() { return maxTestedN; };
+        auto GetmaxTestedN() -> unsigned long { return maxTestedN; };
 
         /** Finds all matches in the range [n_start, n_end)
          *  UNSAVE, ONLY CALL IF MATCHES AND FORBIDDENCLASSES SETUP PROPERLY.
@@ -35,24 +33,24 @@ class PowersWithoutPowersFinder
          * \param n_end biggest exponent to be tested is n_end - 1
          * \return Returns all matches in that range
          */
-        std::vector<unsigned long> findInRange(unsigned long n_start, unsigned long n_end);
+        auto findInRange(unsigned long n_start, unsigned long n_end) -> std::vector<unsigned long>;
         //std::vector<Integer> findIn(Abstrakter Container oder Iterator); // Sketch
 
         /** Finds all matches in the range [1, n_end], starts searching at maxTestedN + 1
          * \param n_end biggest exponent to be tested is n_end-1
          * \return Returns all matches in that range
          */
-        inline std::vector<unsigned long> findUntil(unsigned long n_end) { return findInRange(maxTestedN + 1, n_end); };
+        inline auto findUntil(unsigned long n_end) -> std::vector<unsigned long> { return findInRange(maxTestedN + 1, n_end); };
 
         /** Finds all matches in the range [1, C(k)], with smallest k such that C(k) > maxTestedN. Starts searching at maxTestedN + 1
          * \return Returns all matches in that range
          */
-        inline std::vector<unsigned long> findUntilNextCycleEnd() { return findUntil(SuffixMath::nextCompletedCycleN(maxTestedN)); };
+        inline auto findUntilNextCycleEnd() -> std::vector<unsigned long> { return findUntil(SuffixMath::nextCompletedCycleN(maxTestedN)); };
 
         /**
          * \return Returns true iff the finiteness can be proven with the computed information (forbiddenClasses)
          */
-        bool finitenessProvable();
+        auto finitenessProvable() -> bool;
 
         /** Prints a small benchmark table
          * \param maxN upper bound for N for the benchmark

@@ -5,7 +5,7 @@
 #include "ExtraOperators.hpp"
 
 namespace PowersWithoutPowersFinder_Test {
-    bool Test() {
+    auto Test() -> bool {
         using namespace std;
         cout << " --- Testing PowersWithoutPowersFinder --- " << endl;
         bool success = true;
@@ -17,7 +17,7 @@ namespace PowersWithoutPowersFinder_Test {
         success &= test;
         cout << ((test? "success" : "failed")) << endl;
 
-        cout << "find...(1, 20): ";
+        cout << "find...(1, 6): ";
         pwp.findInRange(1, 6);
         pwp.findUntilNextCycleEnd();
         std::vector<unsigned long> matches = pwp.Getmatches();

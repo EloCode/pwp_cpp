@@ -4,17 +4,8 @@
 #include <limits>
 #include "Stats.hpp"
 #include <iostream>
-PowersWithoutPowersFinder::PowersWithoutPowersFinder()
-{
-    //all Mmebers have default ctor, nothing to do here
-}
 
-PowersWithoutPowersFinder::~PowersWithoutPowersFinder()
-{
-    //all Mmebers have default dtor, nothing to do here
-}
-
-std::vector<unsigned long> PowersWithoutPowersFinder::findInRange(unsigned long n_start, unsigned long n_end) {
+auto PowersWithoutPowersFinder::findInRange(unsigned long n_start, unsigned long n_end) -> std::vector<unsigned long> {
     Integer n_I, k_I;
     unsigned long k;
     if(n_start % 4 != 0)
@@ -41,7 +32,7 @@ std::vector<unsigned long> PowersWithoutPowersFinder::findInRange(unsigned long 
     return Getmatches();
 }
 
-std::vector<SuffixClass> PowersWithoutPowersFinder::GetforbiddenClasses() {
+auto PowersWithoutPowersFinder::GetforbiddenClasses() -> std::vector<SuffixClass> {
     std::vector<SuffixClass> v = forbiddenClasses.toVector();
     v.push_back(SuffixClass(1,1));
     v.push_back(SuffixClass(1,2));
@@ -49,7 +40,7 @@ std::vector<SuffixClass> PowersWithoutPowersFinder::GetforbiddenClasses() {
     return v;
 };
 
-bool PowersWithoutPowersFinder::finitenessProvable() {
+auto PowersWithoutPowersFinder::finitenessProvable() -> bool {
     std::vector<unsigned long>::iterator matchIt;
     matchIt = std::max_element(matches.begin(), matches.end());
     Integer maxMatch = matches[std::distance(matches.begin(), matchIt)];

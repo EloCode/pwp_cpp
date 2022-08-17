@@ -24,20 +24,20 @@ class PowersWithoutPowersWorklist
 
         void resetAll();
         void setForbiddenDigits(const vector<int>& digits);
-        vector<int> getForbiddenDigits();
+        auto getForbiddenDigits() -> vector<int>;
 
         /** Find all matches until tree level max_level
          * maximal exponent checked = (max_level - 1) + 4*5^(max_level - 1)
          * \param max_level 0 <= max_level <= 27, this implementation does not support exploration beyond level 27
          */
-        vector<unsigned long> run(unsigned max_level);
+        auto run(unsigned max_level) -> vector<unsigned long>;
 
         /** Find all matches until tree level max_level
          * maximal exponent checked = (max_level - 1) + 4*5^(max_level - 1)
          * processes tree with depth-first-search resulting in less memory consumption
          * \param max_level 0 <= max_level <= 27, this implementation does not support exploration beyond level 27
          */
-        vector<unsigned long> runDFS(unsigned max_level);
+        auto runDFS(unsigned max_level) -> vector<unsigned long>;
 
         #ifdef _OPENMP
         /** Find all matches until tree level max_level
@@ -45,13 +45,13 @@ class PowersWithoutPowersWorklist
          * uses OMP_NUM_THREADS parallel threads
          * \param max_level 0 <= max_level <= 27, this implementation does not support exploration beyond level 27
          */
-        vector<unsigned long> runParallel(unsigned max_level);
+        auto runParallel(unsigned max_level) -> vector<unsigned long>;
         #endif //_OPENMP
 
         /**
          * \return true if unexpanded and matches are empty => last termination happened due to empty worklist => series is finite and complete
          */
-        bool isComplete();
+        auto isComplete() -> bool;
 
         static void timeTableRun(unsigned long maxK=14);
         #ifdef _OPENMP
@@ -66,8 +66,8 @@ class PowersWithoutPowersWorklist
         void printStatistics(unsigned long  max_level=K_MAX_FOR_ULONG);
         #endif // STATS
     private:
-        inline vector<unsigned long>& getWL(unsigned long _level) { return worklist.at(_level-1); }
-        inline bool isInWLRange(unsigned long _level) { return 0 < _level and _level <= K_MAX_FOR_ULONG; }
+        inline auto getWL(unsigned long _level) -> vector<unsigned long>& { return worklist.at(_level-1); }
+        inline auto isInWLRange(unsigned long _level) -> bool { return 0 < _level and _level <= K_MAX_FOR_ULONG; }
 
         /** Adds the first expansion of [r]_{k} to the end of the specified worklist
          * The nth expansion of [r]_{k} is [x | x in [r]_{k}, cycleStart (k+n) <= x <= cycleLast (k+n)]

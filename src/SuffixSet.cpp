@@ -11,7 +11,7 @@ SuffixSet::~SuffixSet()
 {
 }
 
-unsigned long SuffixSet::modCk(unsigned long n, unsigned long k) {
+auto SuffixSet::modCk(unsigned long n, unsigned long k) -> unsigned long {
     if (SuffixMath::cycleLenOverflow(k))
         return n;
     else
@@ -30,7 +30,7 @@ void SuffixSet::insert(Integer n, Integer k) {
         throw std::domain_error("Not yet implemented for n or k => 2^64");
 }
 
-bool SuffixSet::containsN(unsigned long n) {
+auto SuffixSet::containsN(unsigned long n) -> bool {
     for(unsigned long k = 1; k <= std::min(maxK,n); k++) {
         unsigned long m = modCk(n,k);
         auto i = setRK.find(std::make_pair(m,k));
@@ -39,14 +39,14 @@ bool SuffixSet::containsN(unsigned long n) {
     }
     return false;
 }
-bool SuffixSet::containsN(Integer n) {
+auto SuffixSet::containsN(Integer n) -> bool {
     if(n.fits_ulong_p())
         return containsN(n.get_ui());
     else
         throw std::domain_error("Not yet implemented for n => 2^64");
 }
 
-std::vector<SuffixClass> SuffixSet::toVector() {
+auto SuffixSet::toVector() -> std::vector<SuffixClass> {
     Integer k_I, r_I;
     std::vector<SuffixClass> res;
     for(auto p: setRK) {

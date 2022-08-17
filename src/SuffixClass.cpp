@@ -33,30 +33,30 @@ SuffixClass::SuffixClass(const Integer& k, const Integer& nORr, bool isN) {
     #endif
 }
 
-const Integer SuffixClass::getSuffixLen() {
+auto SuffixClass::getSuffixLen() -> const Integer {
     return _k; //copy _k
 }
 
-const Integer SuffixClass::getCycleLen() {
+auto SuffixClass::getCycleLen() -> const Integer {
     return _mod; //copy _mod
 }
 
-const Integer SuffixClass::getRepresentativeN() {
+auto SuffixClass::getRepresentativeN() -> const Integer {
     return _res; //copy _res
 }
 
-bool SuffixClass::contains(const Integer& n) {
+auto SuffixClass::contains(const Integer& n) -> bool {
     //Integer r = n % _mod;
     //cout << "n " << n.get_ui() << " === " << r.get_ui() << ", _res " << _res.get_ui() << " - Return " << (n >= _min and n % _mod == _res) << endl;
     return n >= _min and n % _mod == _res;
 }
 
-std::ostream& operator<<(std::ostream& os, const SuffixClass& obj) {
+auto operator<<(std::ostream& os, const SuffixClass& obj) -> std::ostream& {
     os << obj._res << " (mod " << obj._mod << " )(k " << obj._k << " )";
     return os;
 }
 
-std::istream& operator>>(std::istream& is, SuffixClass& obj)
+auto operator>>(std::istream& is, SuffixClass& obj) -> std::istream&
 {
     string tmp;
     is >> tmp; // _res

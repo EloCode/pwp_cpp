@@ -5,7 +5,7 @@
 #include "ExtraOperators.hpp"
 
 namespace PowersWithoutPowersWorklist_Test {
-    bool Test() {
+    auto Test() -> bool {
         using namespace std;
         cout << " --- Testing PowersWithoutPowersWorklist --- " << endl;
         bool success = true;

@@ -25,7 +25,7 @@ void PowersWithoutPowersWorklist::setForbiddenDigits(const vector<int>& digits)
      for (int i: digits)
         forbiddenDigits[i] = true;
  }
-vector<int> PowersWithoutPowersWorklist::getForbiddenDigits() {
+auto PowersWithoutPowersWorklist::getForbiddenDigits() -> vector<int> {
     vector<int> digits;;
     for (int i = 0; i < 10; i++) {
         if (forbiddenDigits[i])
@@ -34,7 +34,7 @@ vector<int> PowersWithoutPowersWorklist::getForbiddenDigits() {
     return digits;
 }
 
-vector<unsigned long> PowersWithoutPowersWorklist::run(unsigned max_level) {
+auto PowersWithoutPowersWorklist::run(unsigned max_level) -> vector<unsigned long> {
     for(; level <= max_level; level++) {
         for(unsigned long n: getWL(level)) {
             const Integer forbiddenDigitIndex = SuffixMath::powContains(forbiddenDigits, 2, n);
@@ -72,7 +72,7 @@ vector<unsigned long> PowersWithoutPowersWorklist::run(unsigned max_level) {
     return matches;
 }
 
-vector<unsigned long> PowersWithoutPowersWorklist::runDFS(unsigned max_level) {
+auto PowersWithoutPowersWorklist::runDFS(unsigned max_level) -> vector<unsigned long> {
     cout << "Initial worklist: " << worklist << endl;
     unsigned long n;
     while(true) {
@@ -127,7 +127,7 @@ vector<unsigned long> PowersWithoutPowersWorklist::runDFS(unsigned max_level) {
 }
 
 #ifdef _OPENMP
-vector<unsigned long> PowersWithoutPowersWorklist::runParallel(unsigned max_level) {
+auto PowersWithoutPowersWorklist::runParallel(unsigned max_level) -> vector<unsigned long> {
     int N = omp_get_max_threads();
     while(level <= max_level and getWL(level).size() < N * 10)
         run(level + 1);
@@ -178,7 +178,7 @@ vector<unsigned long> PowersWithoutPowersWorklist::runParallel(unsigned max_leve
 }
 #endif //_OPENMP
 
-bool PowersWithoutPowersWorklist::isComplete() {
+auto PowersWithoutPowersWorklist::isComplete() -> bool {
     if(not  unexpanded.empty())
         return false;
     for(level = 1; level <= K_MAX_FOR_ULONG; level++) {

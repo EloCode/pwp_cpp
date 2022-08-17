@@ -6,7 +6,7 @@ using namespace std;
 
 // C++ template to print vector container elements
 template <typename T>
-ostream& operator<<(ostream& os, const vector<T>& v)
+auto operator<<(ostream& ostream, const vector<T>& vector) -> ostream&
 {
     os << "[";
     for (int i = 0; i < v.size(); ++i) {
@@ -20,7 +20,7 @@ ostream& operator<<(ostream& os, const vector<T>& v)
 
 // C++ template to print array container elements
 template <typename T, size_t size>
-ostream& operator<<(ostream& os, const array<T, size>& a)
+auto operator<<(ostream& os, const array<T, size>& a) -> ostream&
 {
     os << "[";
     for (size_t i = 0; i < size; ++i) {
