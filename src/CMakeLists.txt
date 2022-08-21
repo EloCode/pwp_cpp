@@ -10,6 +10,7 @@ find_library(libgmp gmp REQUIRED)
 find_library(libgmpxx gmpxx REQUIRED)
 find_package(OpenMP)
 
+find_package(Doxygen OPTIONAL_COMPONENTS dot mscgen dia)
 
 include_directories(${PROJECT_SOURCE_DIR})
 add_executable(pwp main.cpp config.hpp PowersWithoutPowersFinder_Test.hpp PowersWithoutPowersWorklist_Test.hpp SuffixClass.cpp SuffixMath.cpp SuffixSet.cpp
@@ -21,5 +22,13 @@ target_include_directories(pwp PUBLIC "${PROJECT_BINARY_DIR}")
 target_link_libraries(pwp PUBLIC ${libgmp} ${libgmpxx})
 if(OpenMP_CXX_FOUND)
     target_link_libraries(pwp PUBLIC OpenMP::OpenMP_CXX)
+endif()
+
+if(DOXYGEN_FOUND)
+    doxygen_add_docs(
+        doxygen
+        ${PROJECT_SOURCE_DIR}
+        COMMENT "Generate documentation"
+    )
 endif()
 
