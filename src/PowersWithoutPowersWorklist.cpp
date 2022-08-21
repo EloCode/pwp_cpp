@@ -1,6 +1,8 @@
 #include "PowersWithoutPowersWorklist.hpp"
 
-#include <omp.h>
+#ifdef _OPENMP
+   #include <omp.h>
+#endif
 #include "SuffixMath.hpp"
 #include <iostream>
 #include "ExtraOperators.hpp"

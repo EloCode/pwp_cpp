@@ -9,9 +9,6 @@
 class PowersWithoutPowersFinder
 {
     public:
-        /** Default destructor */
-        virtual ~PowersWithoutPowersFinder() = default;
-
         /**
          * \return Returns a vector of all matches that could be found so far
          */
