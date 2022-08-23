@@ -16,3 +16,4 @@ _deps
 .*
 !/.gitignore
 !/.clang-tidy
+!/.clang-format
