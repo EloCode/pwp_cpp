@@ -52,14 +52,12 @@ auto bench(std::vector<std::string>& args) -> void {
   if (args.size() == 4) {
     printWelcome();
     PowersWithoutPowersWorklist::timeTableRunParallel(std::stol(args.at(3)));
-    PowersWithoutPowersWorklist::speedUpTable(std::stol(args.at(2)),
-                                              std::stol(args.at(3)));
+    PowersWithoutPowersWorklist::speedUpTable(std::stol(args.at(2)), std::stol(args.at(3)));
   } else if (args.size() == 3) {
     printWelcome();
     PowersWithoutPowersWorklist::timeTableRunParallel();
     PowersWithoutPowersWorklist::speedUpTable(std::stol(args.at(2)));
-  }
-  if (args.size() == 2) {
+  } else if (args.size() == 2) {
     printWelcome();
     PowersWithoutPowersWorklist::timeTableRunParallel();
     PowersWithoutPowersWorklist::speedUpTable();
@@ -173,6 +171,6 @@ auto main(int argc, char** argv) -> int {
   } else {
     printHelp();
   }
-  return 0;
+  return SUCCESS;
 }
 #endif  // TEST
