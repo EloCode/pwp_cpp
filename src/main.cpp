@@ -1,28 +1,28 @@
 #include "config.hpp"
+#include "ErrorCodes.hpp"
 
+#include "PowersWithoutPowersFinder.hpp"
+#include "Stats.hpp"
+#include "SuffixMath.hpp"
+#include "ExtraOperators.hpp"
+#include "PowersWithoutPowersWorklist.hpp"
 #include <gmpxx.h>
 #include <cstdlib>
 #include <iostream>
+#include <ctime>
 #ifdef _OPENMP
 #include <omp.h>
 #endif
-
+ 
 #ifdef TEST
 #include "PowersWithoutPowersFinder_Test.hpp"
-#include "PowersWithoutPowersTasking_Test.hpp"
 #include "PowersWithoutPowersWorklist_Test.hpp"
 #include "SuffixClass_Test.hpp"
 #include "SuffixMath_Test.hpp"
 #include "SuffixSet_Test.hpp"
 #endif  // TEST
-#ifdef BENCHMARK
-#include <ctime>
-#include "PowersWithoutPowersFinder.hpp"
-#include "Stats.hpp"
-#include "SuffixMath.hpp"
-#endif  // BENCHMARK
-#include "ExtraOperators.hpp"
-#include "PowersWithoutPowersWorklist.hpp"
+
+
 
 void printWelcome() {
   cout << " --- Powers Without Powers --- \n"
@@ -44,6 +44,7 @@ void printHelp() {
 #else
   cout << "Usage: pwp run <max>" << endl;
 #endif  //_OPENMP
+  std::exit(ERROR_INVALID_ARGUMENTS);
 }
 
 auto bench(std::vector<std::string>& args) -> void {
@@ -144,6 +145,19 @@ auto runPWS(std::vector<std::string>& args) -> void {
   }
 }
 
+#ifdef TEST
+auto main() -> int {
+  auto success = SuffixMath_Test::Test();
+  success &= SuffixClass_Test::Test();
+  success &= SuffixSet_Test::Test();
+  success &= PowersWithoutPowersFinder_Test::Test();
+  success &= PowersWithoutPowersWorklist_Test::Test();
+
+  cout << " === Testsuite " << (success ? "succeeded === " : "failed === ") << endl
+       << endl;
+  return success;
+}
+#else
 auto main(int argc, char** argv) -> int {
   std::vector<std::string> args(argv, argv + argc);
   if (args.size() > 1) {
@@ -159,27 +173,6 @@ auto main(int argc, char** argv) -> int {
   } else {
     printHelp();
   }
-
-#ifdef TEST
-  // SuffixMath_Test::Test();
-  // SuffixClass_Test::Test();
-  // SuffixSet_Test::Test();
-  // PowersWithoutPowersFinder_Test::Test();
-  PowersWithoutPowersWorklist_Test::Test();
-// PowersWithoutPowersTasking_Test::Test();
-#endif  // TEST
-#ifdef BENCHMARK
-// PowersWithoutPowersFinder::timeTable();
-// PowersWithoutPowersWorklist::timeTableRun();
-// PowersWithoutPowersWorklist::timeTableRunParallel();
-// PowersWithoutPowersWorklist::speedUpTable(12,15);
-#endif  // BENCHMARK
-#ifdef RUN
-// PowersWithoutPowersWorklist pwp;
-// auto  v = pwp.runParallel(14);
-#ifdef STATS
-// pwp.printStatistics();
-#endif  // STATS
-#endif  // RUN
   return 0;
 }
+#endif  // TEST

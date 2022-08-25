@@ -1,8 +1,3 @@
 
 #define PWP_VERSION_MAJOR @PWP_VERSION_MAJOR@
 #define PWP_VERSION_MINOR @PWP_VERSION_MINOR@
-
-//#define TEST
-//#define BENCHMARK
-#define NDEBUG
-#define STATS

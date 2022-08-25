@@ -32,3 +32,11 @@ if(DOXYGEN_FOUND)
     )
 endif()
 
+enable_testing()
+add_executable(pwp_tests main.cpp config.hpp PowersWithoutPowersFinder_Test.hpp PowersWithoutPowersWorklist_Test.hpp SuffixClass.cpp SuffixMath.cpp SuffixSet.cpp
+PowersWithoutPowersFinder.cpp PowersWithoutPowersWorklist.cpp Stats.cpp SuffixClass.hpp SuffixMath.hpp SuffixSet.hpp
+ExtraOperators.hpp PowersWithoutPowersFinder.hpp PowersWithoutPowersWorklist.hpp Stats.hpp SuffixClass_Test.hpp SuffixMath_Test.hpp SuffixSet_Test.hpp)
+target_compile_definitions(pwp_tests PUBLIC -DTEST)
+target_link_libraries(pwp_tests PUBLIC ${libgmp} ${libgmpxx})
+add_test(NAME pwp_tests COMMAND pwp_tests)
+
