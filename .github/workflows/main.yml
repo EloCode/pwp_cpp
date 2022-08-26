@@ -1,0 +1,27 @@
+name: CI
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# Jobs that can run sequentially or in parallel
+jobs:
+  buildTestsAndRun:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+      - name: Run a multi-line script
+        run: |
+          pwd
+          ls
+          cmake -E make_directory build
+          cmake -S src -B build
+          cmake --build build --target pwp_test -j 6
+          ./build/pwp_test
