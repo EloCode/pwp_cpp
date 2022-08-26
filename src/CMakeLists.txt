@@ -9,7 +9,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 find_library(libgmp gmp REQUIRED)
 find_library(libgmpxx gmpxx REQUIRED)
 find_package(OpenMP)
-
 find_package(Doxygen OPTIONAL_COMPONENTS dot mscgen dia)
 
 include_directories(${PROJECT_SOURCE_DIR})
