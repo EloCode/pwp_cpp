@@ -153,7 +153,7 @@ auto main() -> int {
 
   cout << " === Testsuite " << (success ? "succeeded === " : "failed === ") << endl
        << endl;
-  return success;
+  return success ? SUCCESS : ERROR_PWP_TESTS_FAILED;
 }
 #else
 auto main(int argc, char** argv) -> int {
