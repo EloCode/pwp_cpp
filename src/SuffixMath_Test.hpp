@@ -74,8 +74,7 @@ bool Test() {
   cout << (test ? "success" : "failed") << endl;
 
   cout << "powContainsPows(2, 88): ";
-  test = (powContainsPows(2, 88) ==
-          4);  // 2^(88) = 309,485,009,821,345,068,724,781,056 -> k = 4
+  test = (powContainsPows(2, 88) == 4);  // 2^(88) = 309,485,009,821,345,068,724,781,056 -> k = 4
   success &= test;
   cout << (test ? "success" : "failed") << endl;
 
@@ -102,8 +101,7 @@ bool Test() {
   success &= test;
   cout << ((test ? "success" : "failed")) << endl;
 
-  cout << " --- Overall " << (success ? "success --- " : "failed --- ") << endl
-       << endl;
+  cout << " --- Overall " << (success ? "success --- " : "failed --- ") << endl << endl;
   return success;
 }
 }  // namespace SuffixMath_Test

@@ -113,8 +113,7 @@ auto Test() -> bool {
   }
 #endif  //_OPENMP
 
-  cout << " --- Overall " << (success ? "success --- " : "failed --- ") << endl
-       << endl;
+  cout << " --- Overall " << (success ? "success --- " : "failed --- ") << endl << endl;
   return success;
 }
 }  // namespace PowersWithoutPowersWorklist_Test

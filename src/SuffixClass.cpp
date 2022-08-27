@@ -28,8 +28,7 @@ SuffixClass::SuffixClass(const Integer& k, const Integer& nORr, bool isN) {
   }
 #ifndef TEST
   if (_n >= _max) {
-    throw std::domain_error(
-        "n is not the smallest representative of this class");
+    throw std::domain_error("n is not the smallest representative of this class");
   }
 #endif
 }
@@ -71,8 +70,7 @@ auto operator>>(std::istream& is, SuffixClass& obj) -> std::istream& {
   is >> tmp;  // )
   obj._min = SuffixMath::cycleStart(obj._k.get_ui());
 
-  if ((not obj._k.fits_ulong_p()) or (obj._res < obj._min) or
-      (obj._mod != SuffixMath::cycleLen(obj._k.get_ui())))
+  if ((not obj._k.fits_ulong_p()) or (obj._res < obj._min) or (obj._mod != SuffixMath::cycleLen(obj._k.get_ui())))
     is.setstate(std::istream::failbit);
   return is;
 }

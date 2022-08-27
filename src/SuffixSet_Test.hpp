@@ -24,10 +24,9 @@ bool Test() {
   cout << (test ? "success" : "failed") << endl;
 
   cout << "contains [0..30]: ";
-  const std::array<bool, 30> member = {
-      false, true,  true,  true,  false, true,  false, false, false, true,
-      false, false, false, true,  false, false, false, true,  false, false,
-      false, true,  true,  false, false, true,  false, false, false, true};
+  const std::array<bool, 30> member = {false, true,  true,  true,  false, true,  false, false, false, true,
+                                       false, false, false, true,  false, false, false, true,  false, false,
+                                       false, true,  true,  false, false, true,  false, false, false, true};
   test = true;
   for (unsigned long n = 0; n < 30; n++) {
     test &= (s.containsN(n) == member[n]);
@@ -35,8 +34,7 @@ bool Test() {
   success &= test;
   cout << (test ? "success" : "failed") << endl;
 
-  cout << " --- Overall " << (success ? "success --- " : "failed --- ") << endl
-       << endl;
+  cout << " --- Overall " << (success ? "success --- " : "failed --- ") << endl << endl;
   return success;
 }
 }  // namespace SuffixSet_Test
