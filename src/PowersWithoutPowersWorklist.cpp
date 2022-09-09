@@ -130,7 +130,7 @@ auto PowersWithoutPowersWorklist::runDFS(unsigned max_level) -> vector<unsigned 
 
 #ifdef _OPENMP
 auto PowersWithoutPowersWorklist::runParallel(unsigned max_level) -> vector<unsigned long> {
-  int N = omp_get_max_threads();
+  std::size_t N = omp_get_max_threads();
   while (level <= max_level and getWL(level).size() < N * 10)
     run(level + 1);
   if (level == max_level)
@@ -212,26 +212,23 @@ void PowersWithoutPowersWorklist::expand(unsigned long r, unsigned long k, unsig
 
 void PowersWithoutPowersWorklist::timeTableRun(unsigned long maxK) {
   using namespace std;
-  time_t t_start, t_end;
-  int h, m, s;  // hours,minutes,seconds
-  int numMatches, numClasses, numUnexpanded;
 
   PowersWithoutPowersWorklist pwp = PowersWithoutPowersWorklist();
   cout << "Worklist" << endl;
   printf("|%10s|%8s|%10s|%10s|\n", "N", "HH:MM:SS", "Matches", "Unexpanded");
-  t_start = time(nullptr);
+  auto t_start = time(nullptr);
   for (unsigned max_level = 1; max_level <= maxK; max_level++) {
     pwp.run(max_level);
-    t_end = time(nullptr);
+    auto t_end = time(nullptr);
 
-    s = (int)(t_end - t_start);
-    h = s / 3600;
+    auto s = (int)(t_end - t_start);
+    auto h = s / 3600;
     s %= 3600;
-    m = s / 60;
+    auto m = s / 60;
     s %= 60;
-    numMatches = pwp.matches.size();
-    numUnexpanded = pwp.unexpanded.size();
-    printf("|%10lu|%2i:%2i:%2i|%10i|%10i|\n", SuffixMath::cycleLast(max_level), h, m, s, numMatches, numUnexpanded);
+    auto numMatches = pwp.matches.size();
+    auto numUnexpanded = pwp.unexpanded.size();
+    printf("|%10lu|%2i:%2i:%2i|%10lu|%10lu|\n", SuffixMath::cycleLast(max_level), h, m, s, numMatches, numUnexpanded);
   }
   cout << endl;
 }
@@ -239,26 +236,23 @@ void PowersWithoutPowersWorklist::timeTableRun(unsigned long maxK) {
 #ifdef _OPENMP
 void PowersWithoutPowersWorklist::timeTableRunParallel(unsigned long maxK) {
   using namespace std;
-  time_t t_start, t_end;
-  int h, m, s;  // hours,minutes,seconds
-  int numMatches, numClasses, numUnexpanded;
 
   PowersWithoutPowersWorklist pwp = PowersWithoutPowersWorklist();
   cout << "Worklist parallel  (x" << omp_get_max_threads() << ")" << endl;
   printf("|%10s|%8s|%10s|%10s|\n", "N", "HH:MM:SS", "Matches", "Unexpanded");
-  t_start = time(nullptr);
+  auto t_start = time(nullptr);
   for (unsigned max_level = 1; max_level <= maxK; max_level++) {
     pwp.runParallel(max_level);
-    t_end = time(nullptr);
+    auto t_end = time(nullptr);
 
-    s = (int)(t_end - t_start);
-    h = s / 3600;
+    auto s = (int)(t_end - t_start);
+    auto h = s / 3600;
     s %= 3600;
-    m = s / 60;
+    auto m = s / 60;
     s %= 60;
-    numMatches = pwp.matches.size();
-    numUnexpanded = pwp.unexpanded.size();
-    printf("|%10lu|%2i:%2i:%2i|%10i|%10i|\n", SuffixMath::cycleLast(max_level), h, m, s, numMatches, numUnexpanded);
+    auto numMatches = pwp.matches.size();
+    auto numUnexpanded = pwp.unexpanded.size();
+    printf("|%10lu|%2i:%2i:%2i|%10lu|%10lu|\n", SuffixMath::cycleLast(max_level), h, m, s, numMatches, numUnexpanded);
   }
   cout << endl;
 }
@@ -325,14 +319,15 @@ void PowersWithoutPowersWorklist::speedUpTable(unsigned long minK, unsigned long
 }
 #endif  //_OPENMP
 
-#define STATS
-#ifdef STATS
-void PowersWithoutPowersWorklist::printStatistics(unsigned long max_level) {
+
+void PowersWithoutPowersWorklist::printStatistics([[maybe_unused]] unsigned long max_level) {
+  #ifdef STATS
   using namespace std;
   printf("%5s|%5s|%14s|%14s\n", "Level", "Max K", "Max K Exponent", "worklist_size");
   for (unsigned i = 0; i < max_level; i++) {
     printf("%5u|%5u|%14lu|%14u\n", i + 1, max_k[i], max_k_number[i], worklist_size[i]);
   }
   cout << endl << "Complete: " << (isComplete() ? "Yes" : "No") << endl << "Matches: " << matches << endl;
+  #endif  // STATS
 }
-#endif  // STATS
+

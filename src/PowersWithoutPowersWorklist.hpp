@@ -14,7 +14,7 @@ class PowersWithoutPowersWorklist {
   unsigned long base = 2;  //!< The base B for the power series. Do NOT CHANGE. Not yet supported
   array<bool, 10> forbiddenDigits = {false, true, true, false, true, false, false, false, true, false};  //!< The Set Ŝ of forbidden Digits
 
-  int level = 1;                                           //!< The level (k) of the suffix class tree which we are
+  unsigned int level = 1;                                  //!< The level (k) of the suffix class tree which we are
                                                            //!< currently processing
   array<vector<unsigned long>, K_MAX_FOR_ULONG> worklist;  //!< Each worklist belongs to one level
   vector<unsigned long> unexpanded;                        //!< n for which 2^n has legal suffix longer than 27 =>
@@ -67,8 +67,9 @@ class PowersWithoutPowersWorklist {
   array<unsigned, K_MAX_FOR_ULONG> max_k{};
   array<unsigned long, K_MAX_FOR_ULONG> max_k_number{};
   array<unsigned, K_MAX_FOR_ULONG> worklist_size{};
-  void printStatistics(unsigned long max_level = K_MAX_FOR_ULONG);
 #endif  // STATS
+  void printStatistics(unsigned long max_level = K_MAX_FOR_ULONG);
+
  private:
   inline auto getWL(unsigned long _level) -> vector<unsigned long>& { return worklist.at(_level - 1); }
   inline auto isInWLRange(unsigned long _level) -> bool { return 0 < _level and _level <= K_MAX_FOR_ULONG; }
