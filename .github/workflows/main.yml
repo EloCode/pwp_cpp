@@ -21,5 +21,5 @@ jobs:
         run: |
           cmake -E make_directory build
           cmake -S src -B build
-          cmake --build build --target pwp_tests -j 6
-          ./build/pwp_tests
+          cmake --build build --target pwp_tests -j
+          ctest --output-on-failure --test-dir build
