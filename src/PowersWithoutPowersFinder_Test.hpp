@@ -24,11 +24,8 @@ auto Test() -> bool {
   std::vector<SuffixClass> forbidden = pwp.GetforbiddenClasses();
   std::sort(forbidden.begin(), forbidden.end());
   std::vector<unsigned long> m = {16};
-  std::vector<SuffixClass> f = {
-      SuffixClass(1_mpz, 1_mpz), SuffixClass(1_mpz, 2_mpz),
-      SuffixClass(1_mpz, 3_mpz), SuffixClass(2_mpz, 4_mpz),
-      SuffixClass(3_mpz, 8_mpz), SuffixClass(4_mpz, 12_mpz),
-      SuffixClass(4_mpz, 20_mpz)};
+  std::vector<SuffixClass> f = {SuffixClass(1_mpz, 1_mpz), SuffixClass(1_mpz, 2_mpz),  SuffixClass(1_mpz, 3_mpz), SuffixClass(2_mpz, 4_mpz),
+                                SuffixClass(3_mpz, 8_mpz), SuffixClass(4_mpz, 12_mpz), SuffixClass(4_mpz, 20_mpz)};
   test &= (matches == m);
   test &= (forbidden == f);
   success &= test;
@@ -41,8 +38,7 @@ auto Test() -> bool {
   success &= test;
   cout << ((test ? "success" : "failed")) << endl;
 
-  cout << " --- Overall " << (success ? "success --- " : "failed --- ") << endl
-       << endl;
+  cout << " --- Overall " << (success ? "success --- " : "failed --- ") << endl << endl;
   return success;
 }
 }  // namespace PowersWithoutPowersFinder_Test

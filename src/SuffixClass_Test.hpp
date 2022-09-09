@@ -59,8 +59,7 @@ bool Test() {
   cout << (test ? "success" : "failed") << endl;
 
   cout << "operator<<: ";
-  cout << SuffixClass(4_mpz, 20_mpz)
-       << endl;  // should print "20 (mod 500 )(k 4 )"
+  cout << SuffixClass(4_mpz, 20_mpz) << endl;  // should print "20 (mod 500 )(k 4 )"
 
   cout << "operator>>: ";
   SuffixClass cmp = SuffixClass(4_mpz, 20_mpz);
@@ -72,8 +71,7 @@ bool Test() {
   success &= test;
   cout << (test ? "success" : "failed") << endl;
 
-  cout << " --- Overall " << (success ? "success --- " : "failed --- ") << endl
-       << endl;
+  cout << " --- Overall " << (success ? "success --- " : "failed --- ") << endl << endl;
   return success;
 }
 }  // namespace SuffixClass_Test

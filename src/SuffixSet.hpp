@@ -54,12 +54,8 @@ class SuffixSet {
 
  private:
   struct rk_hash {
-    inline std::size_t operator()(
-        const std::pair<unsigned long, unsigned long>& p) const {
-      return (
-          std::size_t)(p.first ^
-                       (p.second
-                        << 56));  // k in [1..256] = [1..2^8] -> 2^56 * k < 2^64
+    inline std::size_t operator()(const std::pair<unsigned long, unsigned long>& p) const {
+      return (std::size_t)(p.first ^ (p.second << 56));  // k in [1..256] = [1..2^8] -> 2^56 * k < 2^64
     }
   };
 

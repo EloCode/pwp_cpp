@@ -34,12 +34,8 @@ class SuffixClass {
 
   bool contains(const Integer& n);
 
-  friend bool operator==(const SuffixClass& lhs, const SuffixClass& rhs) {
-    return lhs._k == rhs._k and lhs._res == rhs._res;
-  };
-  friend bool operator!=(const SuffixClass& lhs, const SuffixClass& rhs) {
-    return not(lhs == rhs);
-  };
+  friend bool operator==(const SuffixClass& lhs, const SuffixClass& rhs) { return lhs._k == rhs._k and lhs._res == rhs._res; };
+  friend bool operator!=(const SuffixClass& lhs, const SuffixClass& rhs) { return not(lhs == rhs); };
   friend bool operator<=(const SuffixClass& lhs, const SuffixClass& rhs) {
     return lhs._k <= rhs._k or lhs._res <= rhs._res;
   };  // Sorts for k first then for r

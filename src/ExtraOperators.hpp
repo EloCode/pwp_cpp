@@ -9,7 +9,7 @@ using namespace std;
 template <typename T>
 auto operator<<(ostream& out, const vector<T>& vec) -> ostream& {
   out << "[";
-  for (int i = 0; i < vec.size(); ++i) {
+  for (std::size_t i = 0; i < vec.size(); ++i) {
     out << vec[i];
     if (i != vec.size() - 1)
       out << ", ";

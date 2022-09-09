@@ -5,9 +5,7 @@
 #include <limits>
 #include "Stats.hpp"
 
-auto PowersWithoutPowersFinder::findInRange(unsigned long n_start,
-                                            unsigned long n_end)
-    -> std::vector<unsigned long> {
+auto PowersWithoutPowersFinder::findInRange(unsigned long n_start, unsigned long n_end) -> std::vector<unsigned long> {
   Integer n_I, k_I;
   unsigned long k;
   if (n_start % 4 != 0)
@@ -34,49 +32,40 @@ auto PowersWithoutPowersFinder::findInRange(unsigned long n_start,
   return Getmatches();
 }
 
-auto PowersWithoutPowersFinder::GetforbiddenClasses()
-    -> std::vector<SuffixClass> {
+auto PowersWithoutPowersFinder::GetforbiddenClasses() -> std::vector<SuffixClass> {
   std::vector<SuffixClass> v = forbiddenClasses.toVector();
   v.push_back(SuffixClass(1, 1));
   v.push_back(SuffixClass(1, 2));
   v.push_back(SuffixClass(1, 3));
   return v;
-};
+}
 
 auto PowersWithoutPowersFinder::finitenessProvable() -> bool {
   std::vector<unsigned long>::iterator matchIt;
   matchIt = std::max_element(matches.begin(), matches.end());
   Integer maxMatch = matches[std::distance(matches.begin(), matchIt)];
-  return maxMatch < SuffixMath::cycleStart(
-                        SuffixMath::maxCompletedCycleK(maxTestedN)) and
-         forbiddenClasses.getMaxK() <=
-             SuffixMath::maxCompletedCycleK(maxTestedN);
+  return maxMatch < SuffixMath::cycleStart(SuffixMath::maxCompletedCycleK(maxTestedN)) and
+         forbiddenClasses.getMaxK() <= SuffixMath::maxCompletedCycleK(maxTestedN);
 }
 
 void PowersWithoutPowersFinder::timeTable(unsigned long maxN) {
   using namespace std;
-  time_t t_start, t_end;
-  int h, m, s;  // hours,minutes,seconds
-  int numMatches, numClasses, numUnexpanded;
 
   PowersWithoutPowersFinder pwp = PowersWithoutPowersFinder();
   cout << endl << "Forbidden Classes" << endl;
   printf("|%10s|%8s|%10s|%10s|\n", "N", "HH:MM:SS", "Matches", "Classes");
-  t_start = time(nullptr);
-  for (unsigned long n_start = 1, n_stop = 512000; n_stop < maxN;
-       n_start = n_stop, n_stop *= 2) {
+  auto t_start = time(nullptr);
+  for (unsigned long n_start = 1, n_stop = 512000; n_stop < maxN; n_start = n_stop, n_stop *= 2) {
     pwp.findInRange(n_start, n_stop);
-    t_end = time(nullptr);
-
-    s = (int)(t_end - t_start);
-    h = s / 3600;
+    auto t_end = time(nullptr);
+    auto s = (int)(t_end - t_start);
+    auto h = s / 3600;
     s %= 3600;
-    m = s / 60;
+    auto m = s / 60;
     s %= 60;
-    numMatches = pwp.Getmatches().size();
-    numClasses = pwp.GetforbiddenClasses().size();
-    printf("|%10lu|%2i:%2i:%2i|%10i|%10i|\n", n_stop, h, m, s, numMatches,
-           numClasses);
+    auto numMatches = pwp.Getmatches().size();
+    auto numClasses = pwp.GetforbiddenClasses().size();
+    printf("|%10lu|%2i:%2i:%2i|%10lu|%10lu|\n", n_stop, h, m, s, numMatches, numClasses);
   }
   cout << endl;
 }
