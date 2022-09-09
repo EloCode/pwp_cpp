@@ -50,7 +50,6 @@ auto PowersWithoutPowersFinder::finitenessProvable() -> bool {
 
 void PowersWithoutPowersFinder::timeTable(unsigned long maxN) {
   using namespace std;
-  int numMatches, numClasses, numUnexpanded;
 
   PowersWithoutPowersFinder pwp = PowersWithoutPowersFinder();
   cout << endl << "Forbidden Classes" << endl;
@@ -64,9 +63,9 @@ void PowersWithoutPowersFinder::timeTable(unsigned long maxN) {
     s %= 3600;
     int m = s / 60;
     s %= 60;
-    numMatches = pwp.Getmatches().size();
-    numClasses = pwp.GetforbiddenClasses().size();
-    printf("|%10lu|%2i:%2i:%2i|%10i|%10i|\n", n_stop, h, m, s, numMatches, numClasses);
+    auto numMatches = pwp.Getmatches().size();
+    auto numClasses = pwp.GetforbiddenClasses().size();
+    printf("|%10lu|%2i:%2i:%2i|%10lu|%10lu|\n", n_stop, h, m, s, numMatches, numClasses);
   }
   cout << endl;
 }
