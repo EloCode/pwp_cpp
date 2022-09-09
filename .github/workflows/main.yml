@@ -19,7 +19,6 @@ jobs:
       - uses: actions/checkout@v3
       - name: Build Tests and run
         run: |
-          cmake -E make_directory build
           cmake -S src -B build
-          cmake --build build --target pwp_tests -j
+          cmake --build build -j
           ctest --output-on-failure --test-dir build
