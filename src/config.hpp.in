@@ -2,3 +2,6 @@
 
 #define PWP_VERSION_MAJOR @PWP_VERSION_MAJOR@
 #define PWP_VERSION_MINOR @PWP_VERSION_MINOR@
+#define PWP_VERSION @PWP_VERSION@
+#cmakedefine STATS
+#cmakedefine TEST
