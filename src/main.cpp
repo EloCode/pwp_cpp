@@ -76,9 +76,7 @@ auto run(std::vector<std::string>& args) -> void {
     PowersWithoutPowersWorklist pwp;
     cout << "Run parallel, max_level=" << max_level << ", base=" << pwp.base << ", S=" << pwp.getForbiddenDigits() << endl;
     pwp.runParallel(max_level);
-#ifdef STATS
     pwp.printStatistics(max_level);
-#endif  // STATS
   };
 #endif  //_OPENMP
 
@@ -88,9 +86,7 @@ auto run(std::vector<std::string>& args) -> void {
     PowersWithoutPowersWorklist pwp;
     cout << "Run serial, max_level=" << max_level << ", base=" << pwp.base << ", S=" << pwp.getForbiddenDigits() << endl;
     pwp.run(max_level);
-#ifdef STATS
     pwp.printStatistics(max_level);
-#endif  // STATS
   };
 
   if (args.size() == 3) {
@@ -131,9 +127,7 @@ auto runPWS(std::vector<std::string>& args) -> void {
 
     cout << "Run serial, max_level=" << max_level << ", base=" << pwp.base << ", S=" << pwp.getForbiddenDigits() << endl;
     pwp.run(max_level);
-#ifdef STATS
     pwp.printStatistics(max_level);
-#endif  // STATS
   } else {
     printHelp();
   }
