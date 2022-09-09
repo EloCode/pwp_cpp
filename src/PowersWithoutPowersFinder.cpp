@@ -58,10 +58,10 @@ void PowersWithoutPowersFinder::timeTable(unsigned long maxN) {
   for (unsigned long n_start = 1, n_stop = 512000; n_stop < maxN; n_start = n_stop, n_stop *= 2) {
     pwp.findInRange(n_start, n_stop);
     auto t_end = time(nullptr);
-    int s = (int)(t_end - t_start);
-    int h = s / 3600;
+    auto s = (int)(t_end - t_start);
+    auto h = s / 3600;
     s %= 3600;
-    int m = s / 60;
+    auto m = s / 60;
     s %= 60;
     auto numMatches = pwp.Getmatches().size();
     auto numClasses = pwp.GetforbiddenClasses().size();
