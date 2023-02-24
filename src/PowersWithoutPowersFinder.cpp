@@ -5,7 +5,9 @@
 #include <limits>
 #include "Stats.hpp"
 
-auto PowersWithoutPowersFinder::findInRange(unsigned long n_start, unsigned long n_end) -> std::vector<unsigned long> {
+using namespace std;
+
+auto PowersWithoutPowersFinder::findInRange(unsigned long n_start, unsigned long n_end) -> vector<unsigned long> {
   Integer n_I, k_I;
   unsigned long k;
   if (n_start % 4 != 0)
@@ -16,7 +18,7 @@ auto PowersWithoutPowersFinder::findInRange(unsigned long n_start, unsigned long
     n_I = n;
     k_I = SuffixMath::powContainsPows(2, n_I);
     Stats::updateK(k_I);
-    // std::cout << Stats::maxK.get_str() << std::endl;
+    // cout << Stats::maxK.get_str() << "\n";
     if (k_I == 0)
       matches.push_back(n);
     else {
@@ -32,8 +34,8 @@ auto PowersWithoutPowersFinder::findInRange(unsigned long n_start, unsigned long
   return Getmatches();
 }
 
-auto PowersWithoutPowersFinder::GetforbiddenClasses() -> std::vector<SuffixClass> {
-  std::vector<SuffixClass> v = forbiddenClasses.toVector();
+auto PowersWithoutPowersFinder::GetforbiddenClasses() -> vector<SuffixClass> {
+  vector<SuffixClass> v = forbiddenClasses.toVector();
   v.push_back(SuffixClass(1, 1));
   v.push_back(SuffixClass(1, 2));
   v.push_back(SuffixClass(1, 3));
@@ -41,18 +43,16 @@ auto PowersWithoutPowersFinder::GetforbiddenClasses() -> std::vector<SuffixClass
 }
 
 auto PowersWithoutPowersFinder::finitenessProvable() -> bool {
-  std::vector<unsigned long>::iterator matchIt;
-  matchIt = std::max_element(matches.begin(), matches.end());
-  Integer maxMatch = matches[std::distance(matches.begin(), matchIt)];
+  vector<unsigned long>::iterator matchIt;
+  matchIt = max_element(matches.begin(), matches.end());
+  Integer maxMatch = matches[distance(matches.begin(), matchIt)];
   return maxMatch < SuffixMath::cycleStart(SuffixMath::maxCompletedCycleK(maxTestedN)) and
          forbiddenClasses.getMaxK() <= SuffixMath::maxCompletedCycleK(maxTestedN);
 }
 
 void PowersWithoutPowersFinder::timeTable(unsigned long maxN) {
-  using namespace std;
-
   PowersWithoutPowersFinder pwp = PowersWithoutPowersFinder();
-  cout << endl << "Forbidden Classes" << endl;
+  cout << "\n" << "Forbidden Classes" << "\n";
   printf("|%10s|%8s|%10s|%10s|\n", "N", "HH:MM:SS", "Matches", "Classes");
   auto t_start = time(nullptr);
   for (unsigned long n_start = 1, n_stop = 512000; n_stop < maxN; n_start = n_stop, n_stop *= 2) {
@@ -67,5 +67,5 @@ void PowersWithoutPowersFinder::timeTable(unsigned long maxN) {
     auto numClasses = pwp.GetforbiddenClasses().size();
     printf("|%10lu|%2i:%2i:%2i|%10lu|%10lu|\n", n_stop, h, m, s, numMatches, numClasses);
   }
-  cout << endl;
+  cout << "\n";
 }

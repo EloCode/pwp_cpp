@@ -109,31 +109,31 @@ auto SuffixMath::powContains(const array<bool, 10>& forbidden, const Integer& b,
   // cout << "powContains(forbidden = [";
   // for (auto i: forbidden)
   // cout << i << " ";
-  // cout << "], b = " << b << ", n = " << n << ")" << endl;
+  // cout << "], b = " << b << ", n = " << n << ")" << "\n";
   Integer max_num_digits = 1 + n * 30103 / 100000;  // 30103 / 100000 >~ log_10(2)
   bool max_num_digits_fits_ui = max_num_digits.fits_uint_p();
 
-  // cout << "max_num_digits " << max_num_digits << endl;
+  // cout << "max_num_digits " << max_num_digits << "\n";
 
   unsigned long m_start = 1,
                 m_stop = 10;  // mpz_pow only supports ulong as exponent
   while (true) {
-    // cout << "m_start " << m_start << " - m_stop " << m_stop << endl;
+    // cout << "m_start " << m_start << " - m_stop " << m_stop << "\n";
     mpz_t suffix, pow10m, digit;
     mpz_inits(suffix, pow10m, digit, NULL);
-    // cout << "next pow 10 m_stop" << endl;
+    // cout << "next pow 10 m_stop" << "\n";
     mpz_ui_pow_ui(pow10m, 10,
                   m_stop - 1);  // Index starts with 1, exponents with 0 => -1
-    // cout << "mpz" << mpz_get_ui(pow10m) << endl;
-    // cout << "next pow 10 m_stop" << endl;
+    // cout << "mpz" << mpz_get_ui(pow10m) << "\n";
+    // cout << "next pow 10 m_stop" << "\n";
     mpz_powm(suffix, b.get_mpz_t(), n.get_mpz_t(),
              pow10m);  // suffix = b^n % 10^m_stop
-    // cout << "next pow 10 m_stop" << endl;
+    // cout << "next pow 10 m_stop" << "\n";
     mpz_ui_pow_ui(pow10m, 10,
                   m_start - 1);  // Index starts with 1, exponents with 0 => -1
-    // cout << "next fdiv 10 m_stop" << endl;
+    // cout << "next fdiv 10 m_stop" << "\n";
     mpz_fdiv_q(suffix, suffix, pow10m);  // suffix = suffix / 10^m_start
-    // cout << "Computed suffix " << mpz_get_ui(suffix) << endl;
+    // cout << "Computed suffix " << mpz_get_ui(suffix) << "\n";
     int d;
     for (unsigned long m = m_start; m < m_stop; m++) {
       d = (int)mpz_tdiv_qr_ui(suffix, digit, suffix,
@@ -141,16 +141,16 @@ auto SuffixMath::powContains(const array<bool, 10>& forbidden, const Integer& b,
       // cout << d << " ";
       if (forbidden[d]) {
         mpz_clears(suffix, pow10m, digit, NULL);
-        // cout << "Returning " << m << endl;
+        // cout << "Returning " << m << "\n";
         return m;  //     Return index of forbidden digit
       }
       if (max_num_digits_fits_ui and m >= max_num_digits.get_ui()) {  // Checked all digits from b^n
         mpz_clears(suffix, pow10m, digit, NULL);
-        // cout << endl << "Returning " << 0 << endl;
+        // cout << "\n" << "Returning " << 0 << "\n";
         return 0;  //     Return 0 for signaling a match
       }
     }
-    // cout << endl;
+    // cout << "\n";
     if (m_stop > std::numeric_limits<unsigned long>::max() / 10) {  // b^n has more digits but we cannot check since
                                                                     // m_stop is bound to ulong
       mpz_clears(suffix, pow10m, digit, NULL);

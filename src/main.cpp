@@ -22,6 +22,8 @@
 #include "SuffixSet_Test.hpp"
 #endif  // TEST
 
+using std::cout;
+
 void printWelcome() {
   cout << " --- Powers Without Powers --- \n"
        << "Version: " << PWP_VERSION_MAJOR << "." << PWP_VERSION_MINOR << "\n"
@@ -33,14 +35,14 @@ void printWelcome() {
        << "No"
 #endif  //_OPENMP
        << "\n"
-       << endl;
+       << "\n";
 }
 
 void printHelp() {
 #ifdef _OPENMP
-  cout << "Usage: pwp (bench <min> <max>|run <max> [-s|-p])" << endl;
+  cout << "Usage: pwp (bench <min> <max>|run <max> [-s|-p])" << "\n";
 #else
-  cout << "Usage: pwp run <max>" << endl;
+  cout << "Usage: pwp run <max>" << "\n";
 #endif  //_OPENMP
 #pragma omp master
   std::exit(ERROR_INVALID_ARGUMENTS);
@@ -74,7 +76,7 @@ auto run(std::vector<std::string>& args) -> void {
     printWelcome();
     auto max_level = std::stol(args.at(2), nullptr, 0);
     PowersWithoutPowersWorklist pwp;
-    cout << "Run parallel, max_level=" << max_level << ", base=" << pwp.base << ", S=" << pwp.getForbiddenDigits() << endl;
+    cout << "Run parallel, max_level=" << max_level << ", base=" << pwp.base << ", S=" << pwp.getForbiddenDigits() << "\n";
     pwp.runParallel(max_level);
     pwp.printStatistics(max_level);
   };
@@ -84,7 +86,7 @@ auto run(std::vector<std::string>& args) -> void {
     printWelcome();
     auto max_level = std::stol(args.at(2), nullptr, 0);
     PowersWithoutPowersWorklist pwp;
-    cout << "Run serial, max_level=" << max_level << ", base=" << pwp.base << ", S=" << pwp.getForbiddenDigits() << endl;
+    cout << "Run serial, max_level=" << max_level << ", base=" << pwp.base << ", S=" << pwp.getForbiddenDigits() << "\n";
     pwp.run(max_level);
     pwp.printStatistics(max_level);
   };
@@ -125,7 +127,7 @@ auto runPWS(std::vector<std::string>& args) -> void {
     }
     pwp.setForbiddenDigits(forbidden);
 
-    cout << "Run serial, max_level=" << max_level << ", base=" << pwp.base << ", S=" << pwp.getForbiddenDigits() << endl;
+    cout << "Run serial, max_level=" << max_level << ", base=" << pwp.base << ", S=" << pwp.getForbiddenDigits() << "\n";
     pwp.run(max_level);
     pwp.printStatistics(max_level);
   } else {
@@ -141,7 +143,7 @@ auto main() -> int {
   success &= PowersWithoutPowersFinder_Test::Test();
   success &= PowersWithoutPowersWorklist_Test::Test();
 
-  cout << " === Testsuite " << (success ? "succeeded === " : "failed === ") << endl << endl;
+  cout << " === Testsuite " << (success ? "succeeded === " : "failed === ") << "\n" << "\n";
   return success ? SUCCESS : ERROR_PWP_TESTS_FAILED;
 }
 #else

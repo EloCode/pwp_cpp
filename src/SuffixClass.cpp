@@ -48,7 +48,7 @@ auto SuffixClass::getRepresentativeN() -> const Integer {
 auto SuffixClass::contains(const Integer& n) -> bool {
   // Integer r = n % _mod;
   // cout << "n " << n.get_ui() << " === " << r.get_ui() << ", _res " <<
-  // _res.get_ui() << " - Return " << (n >= _min and n % _mod == _res) << endl;
+  // _res.get_ui() << " - Return " << (n >= _min and n % _mod == _res) << "\n";
   return n >= _min and n % _mod == _res;
 }
 

@@ -7,7 +7,7 @@
 namespace PowersWithoutPowersFinder_Test {
 auto Test() -> bool {
   using namespace std;
-  cout << " --- Testing PowersWithoutPowersFinder --- " << endl;
+  cout << " --- Testing PowersWithoutPowersFinder --- " << "\n";
   bool success = true;
   bool test = true;
 
@@ -15,7 +15,7 @@ auto Test() -> bool {
   PowersWithoutPowersFinder pwp = PowersWithoutPowersFinder();
   test = true;
   success &= test;
-  cout << ((test ? "success" : "failed")) << endl;
+  cout << ((test ? "success" : "failed")) << "\n";
 
   cout << "find...(1, 6): ";
   pwp.findInRange(1, 6);
@@ -29,16 +29,16 @@ auto Test() -> bool {
   test &= (matches == m);
   test &= (forbidden == f);
   success &= test;
-  cout << (test ? "success" : "failed") << endl;
-  cout << "Matches " << matches << endl;
-  cout << "Forbidden " << forbidden << endl;
+  cout << (test ? "success" : "failed") << "\n";
+  cout << "Matches " << matches << "\n";
+  cout << "Forbidden " << forbidden << "\n";
 
   cout << "finitenessProvable: ";
   test = not pwp.finitenessProvable();
   success &= test;
-  cout << ((test ? "success" : "failed")) << endl;
+  cout << ((test ? "success" : "failed")) << "\n";
 
-  cout << " --- Overall " << (success ? "success --- " : "failed --- ") << endl << endl;
+  cout << " --- Overall " << (success ? "success --- " : "failed --- ") << "\n" << "\n";
   return success;
 }
 }  // namespace PowersWithoutPowersFinder_Test
