@@ -61,14 +61,6 @@ class SuffixSet {
 
   ska::flat_hash_set<std::pair<unsigned long, unsigned long>, rk_hash> setRK;
   unsigned long maxK = 0;
-  // Preventing reallocation by providing
-  mpz_t TWO;   // constant base used for operations like powMod
-  mpz_t op1;   // buffers for the arguments of operations like powMod
-  mpz_t op2;   // buffers for the arguments of operations like powMod
-  mpz_t rop;   // buffers for the results of operations like powMod
-  Integer i1;  // buffer for arguments of operations like cycleLen
-  Integer i2;  // buffer for arguments of operations like cycleLen
-  Integer i3;  // buffer for arguments of operations like cycleLen
 
   // Computes r = n mod cycleLen(k), takes care of wrapping and unwrapping
   unsigned long modCk(unsigned long n, unsigned long r);
