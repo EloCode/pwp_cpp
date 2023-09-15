@@ -10,8 +10,9 @@ auto operator<<(std::ostream& out, const std::vector<T>& vec) -> std::ostream& {
   out << "[";
   for (std::size_t i = 0; i < vec.size(); ++i) {
     out << vec[i];
-    if (i != vec.size() - 1)
+    if (i != vec.size() - 1) {
       out << ", ";
+    }
   }
   out << "]";
   return out;
@@ -23,8 +24,9 @@ auto operator<<(std::ostream& out, const std::array<T, size>& arr) -> std::ostre
   out << "[";
   for (std::size_t i = 0; i < size; ++i) {
     out << arr[i];
-    if (i != size - 1)
+    if (i != size - 1) {
       out << ", ";
+    }
   }
   out << "]";
   return out;

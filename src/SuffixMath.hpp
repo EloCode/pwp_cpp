@@ -6,14 +6,13 @@
 #include <vector>
 
 using Integer = mpz_class;
-#define K_MAX_FOR_ULONG 27
+
+const int NUM_DIGITS_I = 10;
+const std::size_t NUM_DIGITS_ST = 10;
+
+const unsigned long K_MAX_FOR_ULONG = 27;
 
 namespace SuffixMath {
-const Integer ZERO = 0;
-const Integer ONE = 1;
-const Integer TWO = 2;
-const Integer FOUR = 4;
-const Integer FIVE = 5;
 
 const std::array<const unsigned long, K_MAX_FOR_ULONG> Len_ulong = {4,
                                                                     20,
@@ -43,57 +42,57 @@ const std::array<const unsigned long, K_MAX_FOR_ULONG> Len_ulong = {4,
                                                                     1192092895507812500,
                                                                     5960464477539062500};
 
-inline const Integer cycleStart_I(unsigned long k) {
-  return Integer(k);
+inline auto cycleStart_I(unsigned long k) -> Integer {
+  return {k};
 }
-const Integer cycleLen_I(unsigned long k);
-inline const Integer cycleEnd_I(unsigned long k) {
+auto cycleLen_I(unsigned long k) -> Integer;
+inline auto cycleEnd_I(unsigned long k) -> Integer {
   return cycleStart_I(k) + cycleLen_I(k);
 }
-inline const Integer cycleLast_I(unsigned long k) {
+inline auto cycleLast_I(unsigned long k) -> Integer {
   return cycleStart_I(k) + cycleLen_I(k) - 1;
 }
 
-inline unsigned long cycleStart(unsigned long k) {
+inline auto cycleStart(unsigned long k) -> unsigned long {
   return k;
 }
-inline unsigned long cycleLen(unsigned long k) {
+inline auto cycleLen(unsigned long k) -> unsigned long {
   return Len_ulong[k - 1];
 }
-inline unsigned long cycleEnd(unsigned long k) {
+inline auto cycleEnd(unsigned long k) -> unsigned long {
   return cycleStart(k) + cycleLen(k);
 }
-inline unsigned long cycleLast(unsigned long k) {
+inline auto cycleLast(unsigned long k) -> unsigned long {
   return cycleStart(k) + cycleLen(k) - 1;
 }
 
-inline bool cycleStartOverflow(unsigned long) {
+inline auto cycleStartOverflow(unsigned long /*unused*/) -> bool {
   return false;
 }
-inline bool cycleLenOverflow(unsigned long k) {
+inline auto cycleLenOverflow(unsigned long k) -> bool {
   return k > K_MAX_FOR_ULONG;
 }
-inline bool cycleEndOverflow(unsigned long k) {
+inline auto cycleEndOverflow(unsigned long k) -> bool {
   return k > K_MAX_FOR_ULONG;
 }
-inline bool cycleLastOverflow(unsigned long k) {
+inline auto cycleLastOverflow(unsigned long k) -> bool {
   return k > K_MAX_FOR_ULONG;
 }
 
 /**
 @return biggest k such that cycleLast(k) <= n
 */
-unsigned long maxCompletedCycleK(unsigned long n);
+auto maxCompletedCycleK(unsigned long n) -> unsigned long;
 
 /**
 @return biggest integer n_k <= n where n_k is the end of a cycle
 */
-unsigned long maxCompletedCycleN(unsigned long n);
+auto maxCompletedCycleN(unsigned long n) -> unsigned long;
 
 /**
 @return smallest integer n_k > n where n_k is the end of a cycle
 */
-unsigned long nextCompletedCycleN(unsigned long n);
+auto nextCompletedCycleN(unsigned long n) -> unsigned long;
 
 /**
 @param digits The list of forbidden digits
@@ -102,7 +101,7 @@ unsigned long nextCompletedCycleN(unsigned long n);
 @return the smallest index k where a forbidden digit was found, 0 if b^n does
 not contain any forbidden digits
 */
-const Integer powContains(const std::vector<int>& digits, const Integer& b, const Integer& n);
+auto powContains(const std::vector<int>& digits, const Integer& b, const Integer& n) -> Integer;
 
 /**
 @param forbidden mask for forbidden digits s.t. forbidden[i] == true means i is
@@ -112,7 +111,7 @@ a forbidden digit
 @return the smallest index k where a forbidden digit was found, 0 if b^n does
 not contain any forbidden digits
 */
-const Integer powContains(const std::array<bool, 10>& forbidden, const Integer& b, const Integer& n);
+auto powContains(const std::array<bool, NUM_DIGITS_ST>& forbidden, const Integer& b, const Integer& n) -> Integer;
 
 /** forbidden digits are all powers of b that are smaller than 10
 @param b base
@@ -120,6 +119,6 @@ const Integer powContains(const std::array<bool, 10>& forbidden, const Integer& 
 @return the smallest index k where a forbidden digit was found, 0 if b^n does
 not contain any forbidden digits
 */
-const Integer powContainsPows(const Integer& b, const Integer& n);
+auto powContainsPows(const Integer& b, const Integer& n) -> Integer;
 
 }  // namespace SuffixMath

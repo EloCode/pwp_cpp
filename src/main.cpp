@@ -40,9 +40,11 @@ void printWelcome() {
 
 void printHelp() {
 #ifdef _OPENMP
-  cout << "Usage: pwp (bench <min> <max>|run <max> [-s|-p])" << "\n";
+  cout << "Usage: pwp (bench <min> <max>|run <max> [-s|-p])"
+       << "\n";
 #else
-  cout << "Usage: pwp run <max>" << "\n";
+  cout << "Usage: pwp run <max>"
+       << "\n";
 #endif  //_OPENMP
 #pragma omp master
   std::exit(ERROR_INVALID_ARGUMENTS);
@@ -143,7 +145,8 @@ auto main() -> int {
   success &= PowersWithoutPowersFinder_Test::Test();
   success &= PowersWithoutPowersWorklist_Test::Test();
 
-  cout << " === Testsuite " << (success ? "succeeded === " : "failed === ") << "\n" << "\n";
+  cout << " === Testsuite " << (success ? "succeeded === " : "failed === ") << "\n"
+       << "\n";
   return success ? SUCCESS : ERROR_PWP_TESTS_FAILED;
 }
 #else

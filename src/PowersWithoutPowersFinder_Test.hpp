@@ -5,9 +5,10 @@
 #include "PowersWithoutPowersFinder.hpp"
 
 namespace PowersWithoutPowersFinder_Test {
-auto Test() -> bool {
+inline auto Test() -> bool {
   using namespace std;
-  cout << " --- Testing PowersWithoutPowersFinder --- " << "\n";
+  cout << " --- Testing PowersWithoutPowersFinder --- "
+       << "\n";
   bool success = true;
   bool test = true;
 
@@ -23,11 +24,12 @@ auto Test() -> bool {
   std::vector<unsigned long> matches = pwp.Getmatches();
   std::vector<SuffixClass> forbidden = pwp.GetforbiddenClasses();
   std::sort(forbidden.begin(), forbidden.end());
-  std::vector<unsigned long> m = {16};
-  std::vector<SuffixClass> f = {SuffixClass(1_mpz, 1_mpz), SuffixClass(1_mpz, 2_mpz),  SuffixClass(1_mpz, 3_mpz), SuffixClass(2_mpz, 4_mpz),
-                                SuffixClass(3_mpz, 8_mpz), SuffixClass(4_mpz, 12_mpz), SuffixClass(4_mpz, 20_mpz)};
-  test &= (matches == m);
-  test &= (forbidden == f);
+  std::vector<unsigned long> matchesCorrect = {16};
+  std::vector<SuffixClass> forbiddenCorrect = {SuffixClass(1_mpz, 1_mpz), SuffixClass(1_mpz, 2_mpz), SuffixClass(1_mpz, 3_mpz),
+                                               SuffixClass(2_mpz, 4_mpz), SuffixClass(3_mpz, 8_mpz), SuffixClass(4_mpz, 12_mpz),
+                                               SuffixClass(4_mpz, 20_mpz)};
+  test &= (matches == matchesCorrect);
+  test &= (forbidden == forbiddenCorrect);
   success &= test;
   cout << (test ? "success" : "failed") << "\n";
   cout << "Matches " << matches << "\n";
@@ -38,7 +40,8 @@ auto Test() -> bool {
   success &= test;
   cout << ((test ? "success" : "failed")) << "\n";
 
-  cout << " --- Overall " << (success ? "success --- " : "failed --- ") << "\n" << "\n";
+  cout << " --- Overall " << (success ? "success --- " : "failed --- ") << "\n"
+       << "\n";
   return success;
 }
 }  // namespace PowersWithoutPowersFinder_Test

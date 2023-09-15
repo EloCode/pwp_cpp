@@ -12,13 +12,13 @@ using std::vector;
 class PowersWithoutPowersWorklist {
  public:
   unsigned long base = 2;  //!< The base B for the power series. Do NOT CHANGE. Not yet supported
-  array<bool, 10> forbiddenDigits = {false, true, true, false, true, false, false, false, true, false};  //!< The Set Ŝ of forbidden Digits
-
+  array<bool, NUM_DIGITS_ST> forbiddenDigits = {false, true,  true,  false, true,
+                                                false, false, false, true,  false};  //!< The Set Ŝ of forbidden Digits
   unsigned int level = 1;                                  //!< The level (k) of the suffix class tree which we are
                                                            //!< currently processing
   array<vector<unsigned long>, K_MAX_FOR_ULONG> worklist;  //!< Each worklist belongs to one level
   vector<unsigned long> unexpanded;                        //!< n for which 2^n has legal suffix longer than 27 =>
-                                                           //!< children > max<ulong>()
+                                                           //!< children > max<unsigned long>()
   vector<unsigned long> matches;                           //!< matches found during run
   PowersWithoutPowersWorklist() { worklist[0] = {1, 2, 3, 4}; };
 
@@ -57,11 +57,11 @@ class PowersWithoutPowersWorklist {
    */
   auto isComplete() -> bool;
 
-  static void timeTableRun(unsigned long maxK = 14);
+  static void timeTableRun(unsigned long maxK = 14);  // NOLINT
 #ifdef _OPENMP
-  static void timeTableRunParallel(unsigned long maxK = 14);
-  static void speedUpTable(unsigned long minK = 13, unsigned long maxK = 16);
-#endif  //_OPENMP
+  static void timeTableRunParallel(unsigned long maxK = 14);                   // NOLINT
+  static void speedUpTable(unsigned long minK = 13, unsigned long maxK = 16);  // NOLINT
+#endif                                                                         //_OPENMP
 
 #ifdef STATS
   array<unsigned, K_MAX_FOR_ULONG> max_k{};
@@ -72,7 +72,7 @@ class PowersWithoutPowersWorklist {
 
  private:
   inline auto getWL(unsigned long _level) -> vector<unsigned long>& { return worklist.at(_level - 1); }
-  inline auto isInWLRange(unsigned long _level) -> bool { return 0 < _level and _level <= K_MAX_FOR_ULONG; }
+  static inline auto isInWLRange(unsigned long _level) -> bool { return 0 < _level and _level <= K_MAX_FOR_ULONG; }
 
   /** Adds the first expansion of [r]_{k} to the end of the specified worklist
    * The nth expansion of [r]_{k} is [x | x in [r]_{k}, cycleStart (k+n) <= x <=
@@ -80,7 +80,7 @@ class PowersWithoutPowersWorklist {
    * k \param k level of the parent \param k_child level of the child to be
    * expanded \param worklist where the children will be added
    */
-  inline void expand1(unsigned long r, unsigned long k, vector<unsigned long>& worklist);
+  static inline void expand1(unsigned long r, unsigned long k, vector<unsigned long>& worklist);
 
   /** Adds the (k_child - k) expansion of [r]_{k} to the end of the specified
    * worklist The nth expansion of [r]_{k} is [x | x in [r]_{k}, cycleStart
@@ -88,5 +88,5 @@ class PowersWithoutPowersWorklist {
    * r <= cycleLast k \param k level of the parent \param worklist where the
    * children will be added
    */
-  inline void expand(unsigned long r, unsigned long k, unsigned long k_child, vector<unsigned long>& worklist);
+  static inline void expand(unsigned long r, unsigned long k, unsigned long k_child, vector<unsigned long>& worklist);
 };

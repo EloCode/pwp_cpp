@@ -4,9 +4,10 @@
 #include <sstream>
 #include "SuffixClass.hpp"
 namespace SuffixClass_Test {
-bool Test() {
+inline auto Test() -> bool {
   using namespace std;
-  cout << " --- Testing SuffixClass --- " << "\n";
+  cout << " --- Testing SuffixClass --- "
+       << "\n";
   bool success = true;
   bool test = true;
 
@@ -17,12 +18,12 @@ bool Test() {
   cout << ((test ? "success" : "failed")) << "\n";
 
   cout << "contains: ";
-  test = endsWithTwo.contains(1);
-  test &= endsWithTwo.contains(5);
-  test &= endsWithTwo.contains(9);
-  test &= endsWithTwo.contains(1001);
-  test &= not endsWithTwo.contains(1002);
-  test &= not endsWithTwo.contains(4);
+  test = endsWithTwo.contains(1);          // NOLINT
+  test &= endsWithTwo.contains(5);         // NOLINT
+  test &= endsWithTwo.contains(9);         // NOLINT
+  test &= endsWithTwo.contains(1001);      // NOLINT
+  test &= not endsWithTwo.contains(1002);  // NOLINT
+  test &= not endsWithTwo.contains(4);     // NOLINT
   success &= test;
   cout << (test ? "success" : "failed") << "\n";
 
@@ -71,7 +72,8 @@ bool Test() {
   success &= test;
   cout << (test ? "success" : "failed") << "\n";
 
-  cout << " --- Overall " << (success ? "success --- " : "failed --- ") << "\n" << "\n";
+  cout << " --- Overall " << (success ? "success --- " : "failed --- ") << "\n"
+       << "\n";
   return success;
 }
 }  // namespace SuffixClass_Test

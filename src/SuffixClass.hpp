@@ -18,8 +18,7 @@ class SuffixClass {
   Integer _res = 0;  // residuum such that 2^n % _mod = _res
   Integer _n = 0;    // (not yet smallest) representative of the class
  public:
-  SuffixClass(){};
-
+  SuffixClass() = default;
   /** Represents the Suffix [n]_k whith n in [n]_k
   @param k length of the suffix
   @param n exponent of one representative of the class [n]_k
@@ -28,20 +27,28 @@ class SuffixClass {
   */
   SuffixClass(const Integer& k, const Integer& nORr, bool isN = true);
 
-  const Integer getSuffixLen();
-  const Integer getCycleLen();
-  const Integer getRepresentativeN();
+  auto getSuffixLen() -> Integer {
+    return _k;  // copy _k
+  }
 
-  bool contains(const Integer& n);
+  auto getCycleLen() -> Integer {
+    return _mod;  // copy _mod
+  }
 
-  friend bool operator==(const SuffixClass& lhs, const SuffixClass& rhs) { return lhs._k == rhs._k and lhs._res == rhs._res; };
-  friend bool operator!=(const SuffixClass& lhs, const SuffixClass& rhs) { return not(lhs == rhs); };
-  friend bool operator<=(const SuffixClass& lhs, const SuffixClass& rhs) {
+  auto getRepresentativeN() -> Integer {
+    return _res;  // copy _res
+  }
+
+  auto contains(const Integer& n) -> bool;
+
+  friend auto operator==(const SuffixClass& lhs, const SuffixClass& rhs) -> bool { return lhs._k == rhs._k and lhs._res == rhs._res; };
+  friend auto operator!=(const SuffixClass& lhs, const SuffixClass& rhs) -> bool { return not(lhs == rhs); };
+  friend auto operator<=(const SuffixClass& lhs, const SuffixClass& rhs) -> bool {
     return lhs._k <= rhs._k or lhs._res <= rhs._res;
   };  // Sorts for k first then for r
-  friend bool operator<(const SuffixClass& lhs, const SuffixClass& rhs) {
+  friend auto operator<(const SuffixClass& lhs, const SuffixClass& rhs) -> bool {
     return lhs._k < rhs._k or lhs._res < rhs._res;
   };  // Sorts for k first then for r
-  friend std::ostream& operator<<(std::ostream& os, const SuffixClass& obj);
-  friend std::istream& operator>>(std::istream& is, SuffixClass& obj);
+  friend auto operator<<(std::ostream& os, const SuffixClass& obj) -> std::ostream&;
+  friend auto operator>>(std::istream& is, SuffixClass& obj) -> std::istream&;
 };

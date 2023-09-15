@@ -13,9 +13,6 @@ using Integer = mpz_class;
  */
 class SuffixSet {
  public:
-  SuffixSet();
-  ~SuffixSet();
-
   /** Adds the suffix class [n]_k to the container
   @param k length of the suffix
   @param n exponent of one representative of the class
@@ -26,52 +23,45 @@ class SuffixSet {
   @param k length of the suffix
   @param n exponent of one representative of the class
   */
-  void insert(Integer n, Integer k);
+  void insert(const Integer& n, const Integer& k);
 
   /** Adds the suffix class [n]_k to the container
   @param k length of the suffix
   @param n exponent of one representative of the class
   @return true iff N is in any suffix class [r]_k that was previously added
   */
-  bool containsN(unsigned long n);
+  [[nodiscard]] auto containsN(unsigned long n) -> bool;
 
   /** Test if this set contains n
   @param k length of the suffix
   @param n exponent of one representative of the class
   @return true iff n is in any suffix class [r]_k that was previously added
   */
-  bool containsN(Integer n);
+  auto containsN(const Integer& n) -> bool;
 
   /**
   @return the maximal k of all classes [r]_k that are in this set
   */
-  unsigned long getMaxK() { return maxK; };
+  [[nodiscard]] auto getMaxK() const -> unsigned long { return maxK; };
 
   /**
   @return an equivalent representation of this set in form of a vector
   */
-  std::vector<SuffixClass> toVector();
+  [[nodiscard]] auto toVector() const -> std::vector<SuffixClass>;
 
  private:
   struct rk_hash {
-    inline std::size_t operator()(const std::pair<unsigned long, unsigned long>& p) const {
-      return (std::size_t)(p.first ^ (p.second << 56));  // k in [1..256] = [1..2^8] -> 2^56 * k < 2^64
+    inline auto operator()(const std::pair<unsigned long, unsigned long>& p) const -> std::size_t {
+      const auto SHIFT_FACTOR = 56;  // k in [1..256] = [1..2^8] -> 2^56 * k < 2^64
+      return (std::size_t)(p.first ^ (p.second << SHIFT_FACTOR));
     }
   };
 
   ska::flat_hash_set<std::pair<unsigned long, unsigned long>, rk_hash> setRK;
   unsigned long maxK = 0;
-  // Preventing reallocation by providing
-  mpz_t TWO;   // constant base used for operations like powMod
-  mpz_t op1;   // buffers for the arguments of operations like powMod
-  mpz_t op2;   // buffers for the arguments of operations like powMod
-  mpz_t rop;   // buffers for the results of operations like powMod
-  Integer i1;  // buffer for arguments of operations like cycleLen
-  Integer i2;  // buffer for arguments of operations like cycleLen
-  Integer i3;  // buffer for arguments of operations like cycleLen
 
   // Computes r = n mod cycleLen(k), takes care of wrapping and unwrapping
-  unsigned long modCk(unsigned long n, unsigned long r);
+  static auto modCk(unsigned long n, unsigned long k) -> unsigned long;
 };
 
 #endif  // SUFFIXSET_H

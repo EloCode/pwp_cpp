@@ -2,11 +2,13 @@
 
 #include <iostream>
 #include "SuffixMath.hpp"
+// NOLINTBEGIN because of intended magic numbers
 namespace SuffixMath_Test {
-bool Test() {
+inline auto Test() -> bool {
   using namespace std;
   using namespace SuffixMath;
-  cout << " --- Testing SuffixMath --- " << "\n";
+  cout << " --- Testing SuffixMath --- "
+       << "\n";
   bool success = true;
   bool test = true;
 
@@ -101,7 +103,9 @@ bool Test() {
   success &= test;
   cout << ((test ? "success" : "failed")) << "\n";
 
-  cout << " --- Overall " << (success ? "success --- " : "failed --- ") << "\n" << "\n";
+  cout << " --- Overall " << (success ? "success --- " : "failed --- ") << "\n"
+       << "\n";
   return success;
 }
 }  // namespace SuffixMath_Test
+   // NOLINTEND

@@ -11,8 +11,9 @@
 using namespace std;
 
 void PowersWithoutPowersWorklist::resetAll() {
-  for (auto& wl : worklist)
-    wl.clear();
+  for (auto& worklistForCurrentCycle : worklist) {
+    worklistForCurrentCycle.clear();
+  }
   unexpanded.clear();
   matches.clear();
   level = 1;
@@ -23,17 +24,20 @@ void PowersWithoutPowersWorklist::resetAll() {
 }
 
 void PowersWithoutPowersWorklist::setForbiddenDigits(const vector<int>& digits) {
-  for (int i = 0; i < 10; i++)
-    forbiddenDigits[i] = false;
-  for (int i : digits)
-    forbiddenDigits[i] = true;
+  for (int digit = 0; digit < NUM_DIGITS_I; digit++) {
+    forbiddenDigits[digit] = false;
+  }
+  for (int digit : digits) {
+    forbiddenDigits[digit] = true;
+  }
 }
 auto PowersWithoutPowersWorklist::getForbiddenDigits() -> vector<int> {
   vector<int> digits;
   ;
-  for (int i = 0; i < 10; i++) {
-    if (forbiddenDigits[i])
-      digits.push_back(i);
+  for (int digit = 0; digit < NUM_DIGITS_I; digit++) {
+    if (forbiddenDigits[digit]) {
+      digits.push_back(digit);
+    }
   }
   return digits;
 }
@@ -53,14 +57,16 @@ auto PowersWithoutPowersWorklist::run(unsigned max_level) -> vector<unsigned lon
         if (k_child == 0) {
           matches.push_back(n);
           if (isInWLRange(n)) {
-            for (unsigned long k_parent = level; k_parent < n; k_parent++)
+            for (unsigned long k_parent = level; k_parent < n; k_parent++) {
               expand1(n, k_parent, getWL(k_parent + 1));
+            }
           } else {
             unexpanded.push_back(n);
           }
         } else if (isInWLRange(k_child)) {
-          for (unsigned long k_parent = level; k_parent < k_child; k_parent++)
+          for (unsigned long k_parent = level; k_parent < k_child; k_parent++) {
             expand1(n, k_parent, getWL(k_parent + 1));
+          }
         } else {
           unexpanded.push_back(n);
         }
@@ -111,14 +117,16 @@ auto PowersWithoutPowersWorklist::runDFS(unsigned max_level) -> vector<unsigned 
       if (k_child == 0) {
         matches.push_back(n);
         if (isInWLRange(n)) {
-          for (unsigned long k_parent = level; k_parent < n; k_parent++)
+          for (unsigned long k_parent = level; k_parent < n; k_parent++) {
             expand1(n, k_parent, getWL(k_parent + 1));
+          }
         } else {
           unexpanded.push_back(n);
         }
       } else if (isInWLRange(k_child)) {
-        for (unsigned long k_parent = level; k_parent < k_child; k_parent++)
+        for (unsigned long k_parent = level; k_parent < k_child; k_parent++) {
           expand1(n, k_parent, getWL(k_parent + 1));
+        }
       } else {
         unexpanded.push_back(n);
       }
@@ -133,10 +141,12 @@ auto PowersWithoutPowersWorklist::runDFS(unsigned max_level) -> vector<unsigned 
 #ifdef _OPENMP
 auto PowersWithoutPowersWorklist::runParallel(unsigned max_level) -> vector<unsigned long> {
   size_t N = omp_get_max_threads();
-  while (level <= max_level and getWL(level).size() < N * 10)
+  while (level <= max_level and getWL(level).size() < N * 10) {
     run(level + 1);
-  if (level == max_level)
+  }
+  if (level == max_level) {
     return matches;
+  }
 #pragma omp parallel default(shared)
   {
     PowersWithoutPowersWorklist pwp_thread;
@@ -157,8 +167,9 @@ auto PowersWithoutPowersWorklist::runParallel(unsigned max_level) -> vector<unsi
 #pragma omp barrier
 #pragma omp single
     {
-      for (size_t wl = level; wl <= max_level; wl++)
+      for (size_t wl = level; wl <= max_level; wl++) {
         getWL(wl).clear();
+      }
     }
     for (size_t wl = level + 1; wl <= K_MAX_FOR_ULONG; wl++) {
 #pragma omp critical(combineWorklists)
@@ -183,38 +194,43 @@ auto PowersWithoutPowersWorklist::runParallel(unsigned max_level) -> vector<unsi
 #endif  //_OPENMP
 
 auto PowersWithoutPowersWorklist::isComplete() -> bool {
-  if (not unexpanded.empty())
+  if (not unexpanded.empty()) {
     return false;
+  }
   for (level = 1; level <= K_MAX_FOR_ULONG; level++) {
-    if (not getWL(level).empty())
+    if (not getWL(level).empty()) {
       return false;
+    }
   }
   return true;
 }
 
 void PowersWithoutPowersWorklist::expand1(unsigned long r, unsigned long k, vector<unsigned long>& worklist) {
   unsigned long m = SuffixMath::cycleLen(k);
-  for (; r < SuffixMath::cycleEnd(k); r += m)
-    ;
-  for (; r < SuffixMath::cycleStart(k + 1); r += m)
-    ;
-  for (int i = 0; i < 4; i++, r += m)
+  for (; r < SuffixMath::cycleEnd(k); r += m) {
+  }
+  for (; r < SuffixMath::cycleStart(k + 1); r += m) {
+  }
+  for (int i = 0; i < 4; i++, r += m) {
     worklist.push_back(r);
+  }
 }
 
 void PowersWithoutPowersWorklist::expand(unsigned long r, unsigned long k, unsigned long k_child, vector<unsigned long>& worklist) {
   unsigned long m = SuffixMath::cycleLen(k);
-  for (; r < SuffixMath::cycleEnd(k); r += m)
-    ;
-  for (; r < SuffixMath::cycleStart(k_child); r += m)
-    ;
-  for (; r < SuffixMath::cycleEnd(k_child); r += m)
+  for (; r < SuffixMath::cycleEnd(k); r += m) {
+  }
+  for (; r < SuffixMath::cycleStart(k_child); r += m) {
+  }
+  for (; r < SuffixMath::cycleEnd(k_child); r += m) {
     worklist.push_back(r);
+  }
 }
 
 void PowersWithoutPowersWorklist::timeTableRun(unsigned long maxK) {
   PowersWithoutPowersWorklist pwp = PowersWithoutPowersWorklist();
-  cout << "Worklist" << "\n";
+  cout << "Worklist"
+       << "\n";
   printf("|%10s|%8s|%10s|%10s|\n", "N", "HH:MM:SS", "Matches", "Unexpanded");
   auto t_start = time(nullptr);
   for (unsigned max_level = 1; max_level <= maxK; max_level++) {
@@ -236,7 +252,8 @@ void PowersWithoutPowersWorklist::timeTableRun(unsigned long maxK) {
 #ifdef _OPENMP
 void PowersWithoutPowersWorklist::timeTableRunParallel(unsigned long maxK) {
   PowersWithoutPowersWorklist pwp = PowersWithoutPowersWorklist();
-  cout << "Worklist parallel  (x" << omp_get_max_threads() << ")" << "\n";
+  cout << "Worklist parallel  (x" << omp_get_max_threads() << ")"
+       << "\n";
   printf("|%10s|%8s|%10s|%10s|\n", "N", "HH:MM:SS", "Matches", "Unexpanded");
   auto t_start = time(nullptr);
   for (unsigned max_level = 1; max_level <= maxK; max_level++) {
@@ -256,15 +273,18 @@ void PowersWithoutPowersWorklist::timeTableRunParallel(unsigned long maxK) {
 }
 
 void PowersWithoutPowersWorklist::speedUpTable(unsigned long minK, unsigned long maxK) {
-  chrono::time_point<chrono::steady_clock> t_start, t_end;
+  chrono::time_point<chrono::steady_clock> t_start;
+  chrono::time_point<chrono::steady_clock> t_end;
 
-  cout << "Worklist speedUp" << "\n";
+  cout << "Worklist speedUp"
+       << "\n";
   vector<int> parLevelNumThreads = {0, 1, 2, 4, 8, 16, 18, 32, 64, 128, 144};
   vector<const char*> parLevel = {"No OMP", "x1", "x2", "x4", "x8", "x16", "x18", "x32", "x64", "x128", "x144"};
   vector<vector<unsigned>> t(parLevel.size());
 
   // ---Timetable---
-  cout << "Runtime [ms]" << "\n";
+  cout << "Runtime [ms]"
+       << "\n";
   // Header Line
   printf("|%14s|", "N");
   for (const char* s : parLevel)
@@ -295,7 +315,8 @@ void PowersWithoutPowersWorklist::speedUpTable(unsigned long minK, unsigned long
   cout << "\n";
 
   // ---Speedup  table---
-  cout << "Speedup" << "\n";
+  cout << "Speedup"
+       << "\n";
   // Header Line
   printf("|%14s|", "N");
   for (const char* s : parLevel)
@@ -316,14 +337,14 @@ void PowersWithoutPowersWorklist::speedUpTable(unsigned long minK, unsigned long
 }
 #endif  //_OPENMP
 
-
 void PowersWithoutPowersWorklist::printStatistics([[maybe_unused]] unsigned long max_level) {
-  #ifdef STATS
+#ifdef STATS
   printf("%5s|%5s|%14s|%14s\n", "Level", "Max K", "Max K Exponent", "worklist_size");
   for (unsigned i = 0; i < max_level; i++) {
     printf("%5u|%5u|%14lu|%14u\n", i + 1, max_k[i], max_k_number[i], worklist_size[i]);
   }
-  cout << "\n" << "Complete: " << (isComplete() ? "Yes" : "No") << "\n" << "Matches: " << matches << "\n";
-  #endif  // STATS
+  cout << "\n"
+       << "Complete: " << (isComplete() ? "Yes" : "No") << "\n"
+       << "Matches: " << matches << "\n";
+#endif  // STATS
 }
-
