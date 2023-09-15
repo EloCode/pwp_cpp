@@ -1,13 +1,15 @@
 #pragma once
 
 #include <gmpxx.h>
+#include <omp.h>
 #include "ExtraOperators.hpp"
 #include "PowersWithoutPowersWorklist.hpp"
 
 namespace PowersWithoutPowersWorklist_Test {
-auto Test() -> bool {
+inline auto Test() -> bool {
   using namespace std;
-  cout << " --- Testing PowersWithoutPowersWorklist --- " << "\n";
+  cout << " --- Testing PowersWithoutPowersWorklist --- "
+       << "\n";
   bool success = true;
   bool test = true;
 
@@ -19,20 +21,20 @@ auto Test() -> bool {
 
   cout << "run (matches): ";
   auto m = pwp.run(1);
-  test = (m.size() == 0);
+  test = (m.empty());
   success &= test;
   cout << ((test ? "success" : "failed")) << "\n";
 
   cout << "run (worklist): ";
-  test = (pwp.worklist[0].size() == 0);
+  test = (pwp.worklist[0].empty());
   test &= (pwp.worklist[1] == vector<unsigned long>({8, 12, 16, 20}));
-  test &= (pwp.worklist[2].size() == 0);
-  test &= (pwp.worklist[3].size() == 0);
+  test &= (pwp.worklist[2].empty());
+  test &= (pwp.worklist[3].empty());
   success &= test;
   cout << ((test ? "success" : "failed")) << "\n";
 
   cout << "run (unexpanded): ";
-  test = (pwp.unexpanded.size() == 0);
+  test = (pwp.unexpanded.empty());
   success &= test;
   cout << ((test ? "success" : "failed")) << "\n";
 
@@ -43,8 +45,8 @@ auto Test() -> bool {
   cout << ((test ? "success" : "failed")) << "\n";
 
   cout << "run2 (worklist): ";
-  test = (pwp.worklist[0].size() == 0);
-  test &= (pwp.worklist[1].size() == 0);
+  test = (pwp.worklist[0].empty());
+  test &= (pwp.worklist[1].empty());
   test &= (pwp.worklist[2].size() == 16);
   test &= (pwp.worklist[3].size() == 12);
   test &= (pwp.worklist[4].size() == 4);
@@ -59,12 +61,12 @@ auto Test() -> bool {
   test &= (pwp.worklist[13].size() == 4);
   test &= (pwp.worklist[14].size() == 4);
   test &= (pwp.worklist[15].size() == 4);
-  test &= (pwp.worklist[16].size() == 0);
+  test &= (pwp.worklist[16].empty());
   success &= test;
   cout << ((test ? "success" : "failed")) << "\n";
 
   cout << "run2 (unexpanded): ";
-  test = (pwp.unexpanded.size() == 0);
+  test = (pwp.unexpanded.empty());
   success &= test;
   cout << ((test ? "success" : "failed")) << "\n";
 
@@ -72,7 +74,8 @@ auto Test() -> bool {
 #ifdef _OPENMP
   for (int n : {1, 2, 4, 8, 12, 48}) {
     omp_set_num_threads(n);
-    cout << "OMP_NUM_THREADS=" << n << "\n" << "runParallel:";
+    cout << "OMP_NUM_THREADS=" << n << "\n"
+         << "runParallel:";
 
     PowersWithoutPowersWorklist pwp2;
     m = pwp2.runParallel(10);
@@ -113,7 +116,8 @@ auto Test() -> bool {
   }
 #endif  //_OPENMP
 
-  cout << " --- Overall " << (success ? "success --- " : "failed --- ") << "\n" << "\n";
+  cout << " --- Overall " << (success ? "success --- " : "failed --- ") << "\n"
+       << "\n";
   return success;
 }
 }  // namespace PowersWithoutPowersWorklist_Test

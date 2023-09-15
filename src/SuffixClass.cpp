@@ -9,8 +9,9 @@
 using namespace std;
 
 SuffixClass::SuffixClass(const Integer& k, const Integer& nORr, bool isN) {
-  if (not k.fits_ulong_p())
+  if (not k.fits_ulong_p()) {
     throw std::domain_error("Suffix of length k > 2^64 not supported");
+  }
   _k = k;
   _min = SuffixMath::cycleStart_I(k.get_ui());
   _mod = SuffixMath::cycleLen_I(k.get_ui());
@@ -31,18 +32,6 @@ SuffixClass::SuffixClass(const Integer& k, const Integer& nORr, bool isN) {
     throw std::domain_error("n is not the smallest representative of this class");
   }
 #endif
-}
-
-auto SuffixClass::getSuffixLen() -> const Integer {
-  return _k;  // copy _k
-}
-
-auto SuffixClass::getCycleLen() -> const Integer {
-  return _mod;  // copy _mod
-}
-
-auto SuffixClass::getRepresentativeN() -> const Integer {
-  return _res;  // copy _res
 }
 
 auto SuffixClass::contains(const Integer& n) -> bool {
@@ -70,7 +59,8 @@ auto operator>>(std::istream& is, SuffixClass& obj) -> std::istream& {
   is >> tmp;  // )
   obj._min = SuffixMath::cycleStart(obj._k.get_ui());
 
-  if ((not obj._k.fits_ulong_p()) or (obj._res < obj._min) or (obj._mod != SuffixMath::cycleLen(obj._k.get_ui())))
+  if ((not obj._k.fits_ulong_p()) or (obj._res < obj._min) or (obj._mod != SuffixMath::cycleLen(obj._k.get_ui()))) {
     is.setstate(std::istream::failbit);
+  }
   return is;
 }
