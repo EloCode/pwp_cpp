@@ -2,16 +2,16 @@ name: CI
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "develop" ]
   pull_request:
-    branches: [ "master" ]
+    branches: [ "develop" ]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 # Jobs that can run sequentially or in parallel
 jobs:
-  buildTestsAndRun:
+  buildTestsAndRunOnLinux:
     runs-on: ubuntu-latest
 
     steps:
@@ -20,5 +20,16 @@ jobs:
       - name: Build Tests and run
         run: |
           cmake -S src -B build -D CMAKE_BUILD_TYPE=Debug
-          cmake --build build -j
+          cmake --build build -j 4
+          ctest --output-on-failure --test-dir build
+  buildTestsAndRunOnWindows:
+    runs-on: windows-latest
+
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+      - name: Build Tests and run
+        run: |
+          cmake -S src -B build -D CMAKE_BUILD_TYPE=Debug
+          cmake --build build -j 4
           ctest --output-on-failure --test-dir build
