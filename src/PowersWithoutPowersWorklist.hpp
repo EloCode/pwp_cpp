@@ -6,6 +6,11 @@
 #include <array>
 #include <iostream>
 #include <vector>
+
+#ifdef _MSC_VER
+#include <ciso646>
+#endif
+
 using std::array;
 using std::vector;
 

@@ -152,8 +152,8 @@ auto PowersWithoutPowersWorklist::runParallel(unsigned max_level) -> vector<unsi
     PowersWithoutPowersWorklist pwp_thread;
     for (size_t wl = level; wl <= max_level; wl++) {
 #pragma omp for schedule(dynamic, 1) nowait
-      for (auto it = getWL(wl).begin(); it < getWL(wl).end(); it++) {
-        pwp_thread.getWL(wl).push_back(*it);
+      for (long long i = 0; i < static_cast<long long>(getWL(wl).size()); i++) {
+        pwp_thread.getWL(wl).push_back(getWL(wl)[i]);
         pwp_thread.level = wl;
         pwp_thread.run(max_level);
       }

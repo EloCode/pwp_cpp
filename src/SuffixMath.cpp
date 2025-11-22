@@ -6,8 +6,12 @@
 #include <array>
 #include <limits>
 #include <stdexcept>
-
 #include <iostream>
+
+#ifdef _MSC_VER
+#include <ciso646>
+#endif
+
 using namespace std;
 
 const unsigned long NUM_HARDCODED = 50;

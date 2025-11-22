@@ -3,6 +3,10 @@
 #include <gmpxx.h>
 #include <iostream>
 
+#ifdef _MSC_VER
+#include <ciso646>
+#endif
+
 using Integer = mpz_class;
 
 /** Represents Suffix Class [r]_k
