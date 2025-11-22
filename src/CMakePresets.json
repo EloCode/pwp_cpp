@@ -1,0 +1,154 @@
+{
+  "version": 3,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 23,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "base",
+      "hidden": true,
+      "binaryDir": "${sourceDir}/../build/${presetName}",
+      "toolchainFile": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake",
+      "cacheVariables": {
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
+      }
+    },
+    {
+      "name": "windows",
+      "inherits": "base",
+      "hidden": true,
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Windows"
+      }
+    },
+    {
+      "name": "linux",
+      "inherits": "base",
+      "hidden": true,
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Linux"
+      }
+    },
+    {
+      "name": "ninja",
+      "inherits": "base",
+      "hidden": true,
+      "displayName": "Ninja generator",
+      "generator": "Ninja"
+    },
+    {
+      "name": "vs",
+      "inherits": "base",
+      "hidden": true,
+      "displayName": "Visual Studio generator",
+      "generator": "Visual Studio 17 2022"
+    },
+    {
+      "name": "makefiles",
+      "inherits": "base",
+      "hidden": true,
+      "displayName": "Unix Makefiles generator",
+      "generator": "Unix Makefiles"
+    },
+    {
+      "name": "msvc",
+      "inherits": "base",
+      "hidden": true,
+      "displayName": "MSVC compiler",
+      "cacheVariables": {
+        "CMAKE_C_COMPILER": "cl",
+        "CMAKE_CXX_COMPILER": "cl"
+      }
+    },
+    {
+      "name": "clang",
+      "inherits": "base",
+      "hidden": true,
+      "displayName": "Clang compiler",
+      "cacheVariables": {
+        "CMAKE_C_COMPILER": "clang",
+        "CMAKE_CXX_COMPILER": "clang++"
+      }
+    },
+    {
+      "name": "gcc",
+      "inherits": "base",
+      "hidden": true,
+      "displayName": "GCC compiler",
+      "cacheVariables": {
+        "CMAKE_C_COMPILER": "gcc",
+        "CMAKE_CXX_COMPILER": "g++"
+      }
+    },
+    {
+      "name": "windows-vs-msvc",
+      "inherits": [
+        "windows",
+        "vs",
+        "msvc"
+      ]
+    },
+    {
+      "name": "windows-ninja-msvc",
+      "inherits": [
+        "windows",
+        "ninja",
+        "msvc"
+      ]
+    },
+    {
+      "name": "windows-ninja-clang",
+      "inherits": [
+        "windows",
+        "ninja",
+        "clang"
+      ]
+    },
+    {
+      "name": "windows-ninja-gcc",
+      "inherits": [
+        "windows",
+        "ninja",
+        "gcc"
+      ]
+    },
+    {
+      "name": "linux-ninja-clang",
+      "inherits": [
+        "linux",
+        "ninja",
+        "clang"
+      ]
+    },
+    {
+      "name": "linux-ninja-gcc",
+      "inherits": [
+        "linux",
+        "ninja",
+        "gcc"
+      ]
+    },
+    {
+      "name": "linux-makefiles-clang",
+      "inherits": [
+        "linux",
+        "makefiles",
+        "clang"
+      ]
+    },
+    {
+      "name": "linux-makefiles-gcc",
+      "inherits": [
+        "linux",
+        "makefiles",
+        "gcc"
+      ]
+    }
+  ]
+}
