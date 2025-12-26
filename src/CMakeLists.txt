@@ -34,6 +34,7 @@ set(SRC
 )
 
 set(TEST_SRC
+    test_main.cpp
     SuffixClass.cpp
     SuffixMath.cpp
     SuffixSet.cpp
@@ -72,7 +73,7 @@ enable_testing()
 find_package(GTest CONFIG REQUIRED)
 add_executable(pwp_tests ${TEST_SRC})
 target_compile_options(pwp_tests PUBLIC ${COMMON_COMPILE_OPTIONS})
-target_link_libraries(pwp_tests PUBLIC ${COMMON_LINK_LIBRARIES} GTest::gtest GTest::gtest_main)
+target_link_libraries(pwp_tests PUBLIC ${COMMON_LINK_LIBRARIES} GTest::gtest)
 add_test(NAME pwp_tests COMMAND pwp_tests)
 
 # Documentation
