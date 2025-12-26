@@ -36,12 +36,6 @@ TEST(SuffixClassTest, GetRepresentativeN) {
 
 TEST(SuffixClassTest, OperatorEqual) {
   EXPECT_EQ(SuffixClass(4_mpz, 20_mpz), SuffixClass(4_mpz, 20_mpz));
-  // Test that two classes with different n but same residue are equal
-  // For k=4: cycleLen=500, so 20 and 20 have the same residue (both are 20 mod 500)
-  // Since 520 >= cycleEnd (504), we can't use it. Use a value < 504 that has same residue
-  // 20 + 0*500 = 20 (valid, < 504)
-  // We can't easily test with different n values that are both valid, so just test with same values
-  EXPECT_EQ(SuffixClass(4_mpz, 20_mpz), SuffixClass(4_mpz, 20_mpz));
 }
 
 TEST(SuffixClassTest, OperatorNotEqual) {
