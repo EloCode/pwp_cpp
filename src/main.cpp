@@ -14,14 +14,6 @@
 #include <omp.h>
 #endif
 
-#ifdef TEST
-#include "PowersWithoutPowersFinder_Test.hpp"
-#include "PowersWithoutPowersWorklist_Test.hpp"
-#include "SuffixClass_Test.hpp"
-#include "SuffixMath_Test.hpp"
-#include "SuffixSet_Test.hpp"
-#endif  // TEST
-
 using std::cout;
 
 void printWelcome() {
@@ -137,19 +129,6 @@ auto runPWS(std::vector<std::string>& args) -> void {
   }
 }
 
-#ifdef TEST
-auto main() -> int {
-  auto success = SuffixMath_Test::Test();
-  success &= SuffixClass_Test::Test();
-  success &= SuffixSet_Test::Test();
-  success &= PowersWithoutPowersFinder_Test::Test();
-  success &= PowersWithoutPowersWorklist_Test::Test();
-
-  cout << " === Testsuite " << (success ? "succeeded === " : "failed === ") << "\n"
-       << "\n";
-  return success ? SUCCESS : ERROR_PWP_TESTS_FAILED;
-}
-#else
 auto main(int argc, char** argv) -> int {
   std::vector<std::string> args(argv, argv + argc);
   if (args.size() > 1) {
@@ -167,4 +146,3 @@ auto main(int argc, char** argv) -> int {
   }
   return SUCCESS;
 }
-#endif  // TEST

@@ -1,79 +1,54 @@
 #pragma once
 
-#include <iostream>
+#include <gtest/gtest.h>
 #include <sstream>
 #include "SuffixClass.hpp"
-namespace SuffixClass_Test {
-inline auto Test() -> bool {
-  using namespace std;
-  cout << " --- Testing SuffixClass --- "
-       << "\n";
-  bool success = true;
-  bool test = true;
 
-  cout << "Constructor: ";
+TEST(SuffixClassTest, Constructor) {
   SuffixClass endsWithTwo = SuffixClass(1, 1);
-  test = true;
-  success &= test;
-  cout << ((test ? "success" : "failed")) << "\n";
+  EXPECT_TRUE(true);  // Constructor succeeded
+}
 
-  cout << "contains: ";
-  test = endsWithTwo.contains(1);          // NOLINT
-  test &= endsWithTwo.contains(5);         // NOLINT
-  test &= endsWithTwo.contains(9);         // NOLINT
-  test &= endsWithTwo.contains(1001);      // NOLINT
-  test &= not endsWithTwo.contains(1002);  // NOLINT
-  test &= not endsWithTwo.contains(4);     // NOLINT
-  success &= test;
-  cout << (test ? "success" : "failed") << "\n";
+TEST(SuffixClassTest, Contains) {
+  SuffixClass endsWithTwo = SuffixClass(1, 1);
+  EXPECT_TRUE(endsWithTwo.contains(1));
+  EXPECT_TRUE(endsWithTwo.contains(5));
+  EXPECT_TRUE(endsWithTwo.contains(9));
+  EXPECT_TRUE(endsWithTwo.contains(1001));
+  EXPECT_FALSE(endsWithTwo.contains(1002));
+  EXPECT_FALSE(endsWithTwo.contains(4));
+}
 
-  cout << "cetSuffixLen: ";
-  test = (endsWithTwo.getSuffixLen() == 1);
-  success &= test;
-  cout << (test ? "success" : "failed") << "\n";
+TEST(SuffixClassTest, GetSuffixLen) {
+  SuffixClass endsWithTwo = SuffixClass(1, 1);
+  EXPECT_EQ(endsWithTwo.getSuffixLen(), 1);
+}
 
-  cout << "getCycleLen: ";
-  test = (endsWithTwo.getCycleLen() == 4);
-  success &= test;
-  cout << (test ? "success" : "failed") << "\n";
+TEST(SuffixClassTest, GetCycleLen) {
+  SuffixClass endsWithTwo = SuffixClass(1, 1);
+  EXPECT_EQ(endsWithTwo.getCycleLen(), 4);
+}
 
-  cout << "getRepresentativeN: ";
-  test = (endsWithTwo.getRepresentativeN() == 1);
-  success &= test;
-  cout << (test ? "success" : "failed") << "\n";
-  // TODO test if implemented getter
-  //    cout << "Perisistence: ";
-  //    test = false;
-  //    success &= test;
-  //    cout << (test? "success" : "failed") << "\n";
+TEST(SuffixClassTest, GetRepresentativeN) {
+  SuffixClass endsWithTwo = SuffixClass(1, 1);
+  EXPECT_EQ(endsWithTwo.getRepresentativeN(), 1);
+}
 
-  cout << "operator== ";
-  test = (SuffixClass(4_mpz, 20_mpz) == SuffixClass(4_mpz, 20_mpz));
-  test = (SuffixClass(4_mpz, 20_mpz) == SuffixClass(4_mpz, 520_mpz));
-  success &= test;
-  cout << (test ? "success" : "failed") << "\n";
+TEST(SuffixClassTest, OperatorEqual) {
+  EXPECT_EQ(SuffixClass(4_mpz, 20_mpz), SuffixClass(4_mpz, 20_mpz));
+  EXPECT_EQ(SuffixClass(4_mpz, 20_mpz), SuffixClass(4_mpz, 520_mpz));
+}
 
-  cout << "operator!= ";
-  test = (SuffixClass(4_mpz, 20_mpz) != SuffixClass(3_mpz, 20_mpz));
-  test = (SuffixClass(4_mpz, 20_mpz) != SuffixClass(4_mpz, 521_mpz));
-  success &= test;
-  cout << (test ? "success" : "failed") << "\n";
+TEST(SuffixClassTest, OperatorNotEqual) {
+  EXPECT_NE(SuffixClass(4_mpz, 20_mpz), SuffixClass(3_mpz, 20_mpz));
+  EXPECT_NE(SuffixClass(4_mpz, 20_mpz), SuffixClass(4_mpz, 521_mpz));
+}
 
-  cout << "operator<<: ";
-  cout << SuffixClass(4_mpz, 20_mpz) << "\n";  // should print "20 (mod 500 )(k 4 )"
-
-  cout << "operator>>: ";
+TEST(SuffixClassTest, StreamOperators) {
   SuffixClass cmp = SuffixClass(4_mpz, 20_mpz);
   SuffixClass read;
-  stringstream sstr;
+  std::stringstream sstr;
   sstr << "20 (mod 500 )(k 4 )";
   sstr >> read;
-  test = (cmp == read);
-  success &= test;
-  cout << (test ? "success" : "failed") << "\n";
-
-  cout << " --- Overall " << (success ? "success --- " : "failed --- ") << "\n"
-       << "\n";
-  return success;
+  EXPECT_EQ(cmp, read);
 }
-}  // namespace SuffixClass_Test
