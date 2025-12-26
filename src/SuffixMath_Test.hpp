@@ -1,111 +1,83 @@
 #pragma once
 
-#include <iostream>
+#include <gtest/gtest.h>
 #include "SuffixMath.hpp"
+
 // NOLINTBEGIN because of intended magic numbers
-namespace SuffixMath_Test {
-inline auto Test() -> bool {
-  using namespace std;
-  using namespace SuffixMath;
-  cout << " --- Testing SuffixMath --- "
-       << "\n";
-  bool success = true;
-  bool test = true;
+using namespace SuffixMath;
 
-  cout << "Defining Integer: ";
+TEST(SuffixMathTest, DefiningInteger) {
   Integer x = 4;
-  test = true;
-  success &= test;
-  cout << ((test ? "success" : "failed")) << "\n";
+  EXPECT_EQ(x, 4);
+}
 
-  cout << "cycleStart_I: ";
-  test = (cycleStart_I(4) == 4_mpz);
-  success &= test;
-  cout << (test ? "success" : "failed") << "\n";
+TEST(SuffixMathTest, CycleStart_I) {
+  EXPECT_EQ(cycleStart_I(4), 4_mpz);
+}
 
-  cout << "cycleLen_I: ";
-  test = (cycleLen_I(4) == 500_mpz);
-  success &= test;
-  cout << (test ? "success" : "failed") << "\n";
+TEST(SuffixMathTest, CycleLen_I) {
+  EXPECT_EQ(cycleLen_I(4), 500_mpz);
+}
 
-  cout << "cycleEnd_I: ";
-  test = (cycleEnd_I(2) == 22_mpz);
-  success &= test;
-  cout << (test ? "success" : "failed") << "\n";
+TEST(SuffixMathTest, CycleEnd_I) {
+  EXPECT_EQ(cycleEnd_I(2), 22_mpz);
+}
 
-  cout << "cycleLast_I: ";
-  test = (cycleLast_I(3) == 102_mpz);
-  success &= test;
-  cout << (test ? "success" : "failed") << "\n";
+TEST(SuffixMathTest, CycleLast_I) {
+  EXPECT_EQ(cycleLast_I(3), 102_mpz);
+}
 
-  cout << "cycleStart: ";
-  test = (cycleStart(4) == 4);
-  success &= test;
-  cout << (test ? "success" : "failed") << "\n";
+TEST(SuffixMathTest, CycleStart) {
+  EXPECT_EQ(cycleStart(4), 4);
+}
 
-  cout << "cycleLen: ";
-  test = (cycleLen(4) == 500);
-  success &= test;
-  cout << (test ? "success" : "failed") << "\n";
+TEST(SuffixMathTest, CycleLen) {
+  EXPECT_EQ(cycleLen(4), 500);
+}
 
-  cout << "cycleEnd: ";
-  test = (cycleEnd(2) == 22);
-  success &= test;
-  cout << (test ? "success" : "failed") << "\n";
+TEST(SuffixMathTest, CycleEnd) {
+  EXPECT_EQ(cycleEnd(2), 22);
+}
 
-  cout << "cycleLast_I: ";
-  test = (cycleLast_I(3) == 102);
-  success &= test;
-  cout << (test ? "success" : "failed") << "\n";
+TEST(SuffixMathTest, CycleLast) {
+  EXPECT_EQ(cycleLast_I(3), 102);
+}
 
-  cout << "Integer perisistence: ";
+TEST(SuffixMathTest, IntegerPersistence) {
+  Integer x = 4;
   Integer y = x;
   x = 5;
-  test = (y == 4);
-  success &= test;
-  cout << (test ? "success" : "failed") << "\n";
+  EXPECT_EQ(y, 4);
+}
 
-  cout << "powContainsPows(2, 8): ";
-  test = (powContainsPows(2, 8) == 3);  // 2⁸=256 -> k = 3
-  success &= test;
-  cout << (test ? "success" : "failed") << "\n";
+TEST(SuffixMathTest, PowContainsPows_2_8) {
+  EXPECT_EQ(powContainsPows(2, 8), 3);  // 2⁸=256 -> k = 3
+}
 
-  cout << "powContainsPows(2, 16): ";
-  test = (powContainsPows(2, 16) == 0);  // 2^(16) = 65536 -> k = 0
-  success &= test;
-  cout << (test ? "success" : "failed") << "\n";
+TEST(SuffixMathTest, PowContainsPows_2_16) {
+  EXPECT_EQ(powContainsPows(2, 16), 0);  // 2^(16) = 65536 -> k = 0
+}
 
-  cout << "powContainsPows(2, 88): ";
-  test = (powContainsPows(2, 88) == 4);  // 2^(88) = 309,485,009,821,345,068,724,781,056 -> k = 4
-  success &= test;
-  cout << (test ? "success" : "failed") << "\n";
+TEST(SuffixMathTest, PowContainsPows_2_88) {
+  EXPECT_EQ(powContainsPows(2, 88), 4);  // 2^(88) = 309,485,009,821,345,068,724,781,056 -> k = 4
+}
 
-  cout << "powContains([3, 5], 2, 10): ";
+TEST(SuffixMathTest, PowContains_Vector) {
   std::vector<int> v;
   v.push_back(3);
   v.push_back(5);
-  test = (powContains(v, 2, 10) == 0);  // 2^(10) = 1024 -> k = 0
-  success &= test;
-  cout << (test ? "success" : "failed") << "\n";
-
-  cout << "maxCompletedCycleK: ";
-  test = (maxCompletedCycleK(1000) == 4);
-  success &= test;
-  cout << ((test ? "success" : "failed")) << "\n";
-
-  cout << "maxCompletedCycleN: ";
-  test = (maxCompletedCycleN(1000) == 503);
-  success &= test;
-  cout << ((test ? "success" : "failed")) << "\n";
-
-  cout << "nextCompletedCycleN: ";
-  test = (nextCompletedCycleN(1000) == 2504);
-  success &= test;
-  cout << ((test ? "success" : "failed")) << "\n";
-
-  cout << " --- Overall " << (success ? "success --- " : "failed --- ") << "\n"
-       << "\n";
-  return success;
+  EXPECT_EQ(powContains(v, 2, 10), 0);  // 2^(10) = 1024 -> k = 0
 }
-}  // namespace SuffixMath_Test
-   // NOLINTEND
+
+TEST(SuffixMathTest, MaxCompletedCycleK) {
+  EXPECT_EQ(maxCompletedCycleK(1000), 4);
+}
+
+TEST(SuffixMathTest, MaxCompletedCycleN) {
+  EXPECT_EQ(maxCompletedCycleN(1000), 503);
+}
+
+TEST(SuffixMathTest, NextCompletedCycleN) {
+  EXPECT_EQ(nextCompletedCycleN(1000), 2504);
+}
+// NOLINTEND

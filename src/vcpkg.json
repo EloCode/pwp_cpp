@@ -1,6 +1,7 @@
 {
   "dependencies": [
     "gmp",
-    "pkgconf"
+    "pkgconf",
+    "gtest"
   ]
 }

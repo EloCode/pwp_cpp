@@ -18,8 +18,6 @@ include_directories(${CMAKE_CURRENT_BINARY_DIR})
 set(SRC
     main.cpp
     config.hpp
-    PowersWithoutPowersFinder_Test.hpp
-    PowersWithoutPowersWorklist_Test.hpp
     SuffixClass.cpp
     SuffixMath.cpp
     SuffixSet.cpp
@@ -32,9 +30,22 @@ set(SRC
     ExtraOperators.hpp
     PowersWithoutPowersFinder.hpp
     PowersWithoutPowersWorklist.hpp
-    Stats.hpp SuffixClass_Test.hpp
+    Stats.hpp
+)
+
+set(TEST_SRC
+    test_main.cpp
+    SuffixClass.cpp
+    SuffixMath.cpp
+    SuffixSet.cpp
+    PowersWithoutPowersFinder.cpp
+    PowersWithoutPowersWorklist.cpp
+    Stats.cpp
+    SuffixClass_Test.hpp
     SuffixMath_Test.hpp
     SuffixSet_Test.hpp
+    PowersWithoutPowersFinder_Test.hpp
+    PowersWithoutPowersWorklist_Test.hpp
 )
 
 # Define common compile options based on compiler
@@ -57,12 +68,12 @@ add_executable(pwp ${SRC})
 target_compile_options(pwp PUBLIC ${COMMON_COMPILE_OPTIONS})
 target_link_libraries(pwp PUBLIC ${COMMON_LINK_LIBRARIES})
 
-# Test executable
+# Test executable with Google Test
 enable_testing()
-add_executable(pwp_tests ${SRC})
-target_compile_definitions(pwp_tests PUBLIC -DTEST)
+find_package(GTest CONFIG REQUIRED)
+add_executable(pwp_tests ${TEST_SRC})
 target_compile_options(pwp_tests PUBLIC ${COMMON_COMPILE_OPTIONS})
-target_link_libraries(pwp_tests PUBLIC ${COMMON_LINK_LIBRARIES})
+target_link_libraries(pwp_tests PUBLIC ${COMMON_LINK_LIBRARIES} GTest::gtest)
 add_test(NAME pwp_tests COMMAND pwp_tests)
 
 # Documentation
